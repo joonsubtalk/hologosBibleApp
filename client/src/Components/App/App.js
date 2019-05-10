@@ -3,9 +3,9 @@ import React from 'react';
 function App() {
   return (
     <div className="App">
-     Test
+     this is hologos
     </div>
   );
 }
 
-export default App;
+export default App
