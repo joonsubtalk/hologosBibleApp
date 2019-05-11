@@ -1,1 +1,14 @@
+// Normalize
 @import './Vendors/normalize.min.css';
+
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Lato|Raleway');
+
+// Components
+@import './Components/Welcome/Welcome.scss';
+@import './Components/Login/Login.scss';
+@import './Components/Home/Home.scss';
+@import './Components/Book/Book.scss';
+@import './Components/Chapter/Chapter.scss';
+@import './Components/Navbar/Navbar.scss';
+@import './Components/Settings/Settings.scss';

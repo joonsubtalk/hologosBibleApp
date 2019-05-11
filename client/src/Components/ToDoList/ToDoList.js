@@ -73,6 +73,7 @@ class ToDoList extends Component {
 
   render() {
     const { addFormVisible } = this.state;
+    const {photoURL} = this.props.auth;
     if (this.props.data === "loading") {
       return (
         <div className="row center-align">
@@ -88,6 +89,7 @@ class ToDoList extends Component {
           {this.renderAddForm()}
           {this.renderToDos()}
         </div>
+        <img src={photoURL} alt="face" />
         <div className="fixed-action-btn">
           <button
             onClick={this.props.signOut}

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { signIn } from "../../actions";
+import { FACEBOOK, GOOGLE } from '../../configs/constants'
 import PropTypes from "prop-types";
 
 class Login extends Component {
@@ -10,18 +11,20 @@ class Login extends Component {
 
   componentWillUpdate(nextProps) {
     if (nextProps.auth) {
-      this.props.history.push('/app')
+      this.props.history.push('/home')
     }
   }
 
   render() {
+    const { signIn } = this.props;
     return (
-      <div className="row social-signin-container">
-        <div className="col s10 offset-s1 center-align">
-          <img alt="Sign in" id="sign-in" src="/img/user.png" />
-          <h4 id="sign-in-header">Sign In to start</h4>
-          <button href="#" className="social-signin" onClick={this.props.signIn}>
-            Sign In With Google
+      <div className="login">
+        <div className="login__container">
+          <button className="login__facebookBtn" onClick={(facebook)=>signIn(FACEBOOK)}>
+            Login with Facebook
+          </button>
+          <button className="login__googleBtn" onClick={(google)=>signIn(GOOGLE)}>
+            Login with Google
           </button>
         </div>
       </div>

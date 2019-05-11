@@ -1,0 +1,43 @@
+.book {
+  font-size: 1rem;
+  font-family: 'Lato', sans-serif;
+
+  &__container {
+    padding: 1em;
+  }
+  &__header {
+    font-size: 1.25em;
+    cursor: pointer;
+    position: relative;
+  }
+  &__name {
+    padding-left: .8em;
+  }
+  &__books {
+    flex-wrap: wrap;
+    display: none;
+  }
+  &__indicator {
+    position: absolute;
+    top: 5px;
+    $SIZE: 7px;
+    content: '';
+    border-left: $SIZE solid black;
+    border-bottom: $SIZE solid transparent;
+    border-right: $SIZE solid transparent;
+    border-top: $SIZE solid transparent;
+    transition: transform ease .2s;
+  }
+}
+
+.book--reveal {
+  .book { //NAMESPACE
+    &__books {
+      display: flex;
+    }
+    &__indicator {
+      transform: rotate(90deg);
+      top: 10px;
+    }
+  }
+}

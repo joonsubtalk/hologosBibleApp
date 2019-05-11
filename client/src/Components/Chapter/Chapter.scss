@@ -1,0 +1,26 @@
+.chapter {
+  font-size: 1rem;
+  $SIZE: 45px;
+  font-family: 'Lato', sans-serif;
+
+  &__container {
+    border-radius: 5px;
+    height: $SIZE;
+    width: $SIZE;
+    box-shadow: 0 6px 15px rgba(36,37,38,0.2);
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    margin: .75em;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 5px 12px 20px rgba(181, 65, 252, 0.23);
+    }
+  }
+
+  &__number {
+    color: rgba(0,0,0,.5);
+    user-select: none;
+  }
+}

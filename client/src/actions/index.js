@@ -1,5 +1,6 @@
-import { todosRef, authRef, provider } from "../configs/fire";
+import { todosRef, authRef, googleProvider, facebookProvider } from "../configs/fire";
 import { FETCH_TODOS, FETCH_USER } from "./types";
+import { GOOGLE, FACEBOOK } from '../configs/constants';
 
 export const addToDo = (newToDo, uid) => async dispatch => {
   todosRef
@@ -40,9 +41,15 @@ export const fetchUser = () => dispatch => {
   });
 };
 
-export const signIn = () => dispatch => {
+export const signIn = (provider) => dispatch => {
+  const providerStrategy = (provider === FACEBOOK)
+    ? facebookProvider
+    : (provider === GOOGLE)
+      ? googleProvider
+      : googleProvider; //todo
+
   authRef
-    .signInWithPopup(provider)
+    .signInWithPopup(providerStrategy)
     .then(result => {})
     .catch(error => {
       console.log(error);

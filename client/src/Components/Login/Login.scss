@@ -1,0 +1,29 @@
+.login {
+  font-size: 1rem;
+  $GOOGLE_RED: #dd4b39;
+  $FACEBOOK_BLUE: #3b5998;
+  $BTN_WHITE: rgba(255,255,255, .8);
+  font-family: 'Lato', sans-serif;
+
+  &__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  &__facebookBtn {
+    background-color: $FACEBOOK_BLUE;
+    border: none;
+    padding: 1em;
+    color: $BTN_WHITE;
+    cursor: pointer;
+  }
+  &__googleBtn {
+    background-color: $GOOGLE_RED;
+    border: none;
+    padding: 1em;
+    color: $BTN_WHITE;
+    cursor: pointer;
+  }
+}
