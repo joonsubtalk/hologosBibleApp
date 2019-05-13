@@ -1,3 +1,5 @@
 
-export const FETCH_TODOS = "FETCH_TODOS";
 export const FETCH_USER = "FETCH_USER";
+
+export const FETCH_CHAPTER_READ = "FETCH_CHAPTER_READ";
+export const FETCH_BOOK_CHAPTER_READ = "FETCH_BOOK_CHAPTER_READ";

@@ -1,9 +1,10 @@
 .book {
   font-size: 1rem;
   font-family: 'Lato', sans-serif;
+  $SIZE: 5px;
 
   &__container {
-    padding: 1em;
+    padding: 0 1em 1em;
   }
   &__header {
     font-size: 1.25em;
@@ -11,22 +12,37 @@
     position: relative;
   }
   &__name {
-    padding-left: .8em;
+    padding-left: .5em;
+    color: rgba(0,0,0,.7);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
   }
   &__books {
     flex-wrap: wrap;
     display: none;
+    margin-top: 1em;
   }
   &__indicator {
     position: absolute;
-    top: 5px;
-    $SIZE: 7px;
+    top: 7px;
     content: '';
     border-left: $SIZE solid black;
     border-bottom: $SIZE solid transparent;
     border-right: $SIZE solid transparent;
     border-top: $SIZE solid transparent;
     transition: transform ease .2s;
+  }
+  &__progress {
+    font-size: .6em;
+    margin-left: .5em;
+  }
+  &__icon {
+    width: $SIZE;
+    height: $SIZE;
+    background-color: red;
+    border-radius: 50%;
+    margin-left: .25em;
   }
 }
 
@@ -37,7 +53,8 @@
     }
     &__indicator {
       transform: rotate(90deg);
-      top: 10px;
+      top: 9px;
+      left: -4px;
     }
   }
 }

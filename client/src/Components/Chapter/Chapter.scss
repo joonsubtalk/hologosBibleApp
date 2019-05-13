@@ -11,8 +11,10 @@
     display:flex;
     justify-content: center;
     align-items: center;
-    margin: .75em;
+    margin: .375em;
     cursor: pointer;
+    background-color: #ffffff;
+    transition: all ease .2s;
 
     &:hover {
       box-shadow: 5px 12px 20px rgba(181, 65, 252, 0.23);
@@ -22,5 +24,14 @@
   &__number {
     color: rgba(0,0,0,.5);
     user-select: none;
+  }
+}
+
+.chapter--isRead {
+  .chapter { //NAMESPACE
+    &__container {
+      box-shadow: none;
+      background-color: transparent;
+    }
   }
 }

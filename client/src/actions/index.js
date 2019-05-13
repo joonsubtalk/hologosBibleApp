@@ -1,25 +1,31 @@
-import { todosRef, authRef, googleProvider, facebookProvider } from "../configs/fire";
-import { FETCH_TODOS, FETCH_USER } from "./types";
+import { readRef, authRef, googleProvider, facebookProvider } from "../configs/fire";
+import {
+  FETCH_USER,
+  FETCH_BOOK_CHAPTER_READ,
+} from "./types";
 import { GOOGLE, FACEBOOK } from '../configs/constants';
 
-export const addToDo = (newToDo, uid) => async dispatch => {
-  todosRef
+/* Read */
+export const upsertChapterRead = (newRead, book, chapter, uid) => async dispatch => {
+  readRef
     .child(uid)
-    .push()
-    .set(newToDo);
+    .child(book)
+    .child(chapter)
+    .update(newRead);
 };
 
-export const completeToDo = (completeToDoId, uid) => async dispatch => {
-  todosRef
+export const removeChapterRead = (book, chapter, uid) => async dispatch => {
+  readRef
     .child(uid)
-    .child(completeToDoId)
+    .child(book)
+    .child(chapter)
     .remove();
 };
 
-export const fetchToDos = uid => async dispatch => {
-  todosRef.child(uid).on("value", snapshot => {
+export const fetchBookChapterRead = (uid) => async dispatch => {
+  readRef.child(uid).on("value", snapshot => {
     dispatch({
-      type: FETCH_TODOS,
+      type: FETCH_BOOK_CHAPTER_READ,
       payload: snapshot.val()
     });
   });

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { signIn } from "../../actions";
 import { FACEBOOK, GOOGLE } from '../../configs/constants'
 import PropTypes from "prop-types";
+import Loader from "../Loader/Loader";
 
 class Login extends Component {
   static contextTypes = {
@@ -16,16 +17,23 @@ class Login extends Component {
   }
 
   render() {
-    const { signIn } = this.props;
+    const { signIn, auth } = this.props;
     return (
       <div className="login">
         <div className="login__container">
-          <button className="login__facebookBtn" onClick={(facebook)=>signIn(FACEBOOK)}>
-            Login with Facebook
-          </button>
-          <button className="login__googleBtn" onClick={(google)=>signIn(GOOGLE)}>
-            Login with Google
-          </button>
+          {auth !== null
+            ? <Loader />
+            : (
+            <>
+              <button className="login__facebookBtn" onClick={(facebook)=>signIn(FACEBOOK)}>
+                Login with Facebook
+              </button>
+              <button className="login__googleBtn" onClick={(google)=>signIn(GOOGLE)}>
+                Login with Google
+              </button>
+            </>
+            )
+          }
         </div>
       </div>
     );

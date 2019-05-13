@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import throttle from 'lodash/throttle';
+import NavbarItem from '../NavbarItem/NavbarItem';
 
 export default class Navbar extends Component {
 
@@ -48,11 +48,6 @@ export default class Navbar extends Component {
   throttledScroll = (evt) => {
     this.clearTimer();
     this.setTimer();
-
-    // check if user has passed the halfway mark
-    if (window.scrollY > this.getBrowserHeight()/2) {
-      this.setState({hasPassedFold: true});
-    }
   }
 
   setTimer = () => {
@@ -88,15 +83,9 @@ export default class Navbar extends Component {
             {
               menuItems.map((item) => {
                 const {label, link} = item;
+                const isActive = !!(pathname === link);
                 return (
-                  <li className="navbar__item">
-                    <Link className="navbar__link" to={link}>
-                      <div className="navbar__title">
-                        {label}
-                      </div>
-                    </Link>
-
-                  </li>
+                  <NavbarItem key={label} label={label} link={link} isActive={isActive} />
                 )
               })
             }

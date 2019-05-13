@@ -2,7 +2,7 @@
 @import './Vendors/normalize.min.css';
 
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Lato|Raleway');
+@import url('https://fonts.googleapis.com/css?family=Lato|Raleway|Roboto');
 
 // Components
 @import './Components/Welcome/Welcome.scss';
@@ -11,4 +11,10 @@
 @import './Components/Book/Book.scss';
 @import './Components/Chapter/Chapter.scss';
 @import './Components/Navbar/Navbar.scss';
+@import './Components/NavbarItem/NavbarItem.scss';
 @import './Components/Settings/Settings.scss';
+@import './Components/Analytics/Analytics.scss';
+
+html, body {
+  background-color: #f5f6f8;
+}

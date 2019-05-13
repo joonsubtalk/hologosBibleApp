@@ -1,0 +1,31 @@
+.navbarItem {
+  font-size: 1rem;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  border-right: 1px solid rgba(36,37,38,0.2);
+  &:last-child {
+    border: none;
+  }
+  &__link {
+    text-decoration: none;
+    color: gray;
+    position: relative;
+  }
+  &__title {
+    padding: 1em;
+    font-size: .7em;
+    text-transform: uppercase;
+  }
+}
+
+.navbarItem--active {
+  &.navbarItem {
+    background-image: linear-gradient(120deg, #a6c0fe 0%, #f68084 100%);
+  }
+  .navbarItem {
+    &__title {
+      color: white;
+    }
+  }
+}
