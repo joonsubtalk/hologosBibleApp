@@ -55,10 +55,13 @@ class Analytics extends Component {
   }
 
   render() {
-    const { read } = this.props;
+    const { read, profile } = this.props;
     const {revealOverview, revealOT, revealNT} = this.state;
-    var d = new Date();
-    const fakeDate = d.setDate(d.getDate() - 2);
+    const profileDate = profile && profile.planStartDate
+      ?  profile.planStartDate
+      : format(new Date(), 'YYYY-MM-DD');
+
+    const fakeDate = profileDate;
 
     if (read !== null) {
       let otChaptersRead = 0;
@@ -149,10 +152,11 @@ class Analytics extends Component {
   }
 }
 
-const mapStateToProps = ({ data, auth, read }) => {
+const mapStateToProps = ({ data, auth, profile, read }) => {
   return {
     data,
     auth,
+    profile,
     read,
   };
 };

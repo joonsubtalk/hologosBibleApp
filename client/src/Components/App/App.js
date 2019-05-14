@@ -8,13 +8,19 @@ import Settings from '../Settings/Settings';
 import requireAuth from '../Auth/requireAuth';
 import { BrowserRouter, Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchUser } from '../../actions';
+import { fetchUser, fetchProfile } from '../../actions';
 import Navbar from '../Navbar/Navbar';
 
 const NavWithRouter = withRouter(Navbar);
 class App extends Component {
   componentDidMount() {
     this.props.fetchUser();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.auth !== prevProps.auth) {
+      this.props.fetchProfile(this.props.auth.uid);
+    }
   }
 
   render() {
@@ -34,4 +40,10 @@ class App extends Component {
   }
 }
 
-export default connect(null, { fetchUser })(App);
+const mapStateToProps = ({ auth }) => {
+  return {
+    auth,
+  };
+};
+
+export default connect(mapStateToProps, { fetchUser, fetchProfile })(App);

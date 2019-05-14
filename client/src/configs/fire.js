@@ -20,6 +20,7 @@ firebase.initializeApp(config);
 
 const databaseRef = firebase.database().ref();
 export const readRef = databaseRef.child("read");
+export const profileRef = databaseRef.child("profile");
 export const authRef = firebase.auth();
 export const googleProvider = new firebase.auth.GoogleAuthProvider();
 export const facebookProvider = new firebase.auth.FacebookAuthProvider();

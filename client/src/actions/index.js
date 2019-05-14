@@ -1,9 +1,24 @@
-import { readRef, authRef, googleProvider, facebookProvider } from "../configs/fire";
+import { readRef, authRef, profileRef, googleProvider, facebookProvider } from "../configs/fire";
 import {
   FETCH_USER,
-  FETCH_BOOK_CHAPTER_READ,
+  FETCH_USER_PROFILE,
+  FETCH_BOOK_CHAPTER_READ
 } from "./types";
 import { GOOGLE, FACEBOOK } from '../configs/constants';
+
+/* Save Date */
+export const setStartDate = (uid, date) => async dispatch => {
+  profileRef
+    .child(uid)
+    .update(date);
+}
+
+/* Save Date */
+export const setTribe = (uid, tribe) => async dispatch => {
+  profileRef
+    .child(uid)
+    .update(tribe);
+}
 
 /* Read */
 export const upsertChapterRead = (newRead, book, chapter, uid) => async dispatch => {
@@ -31,6 +46,15 @@ export const fetchBookChapterRead = (uid) => async dispatch => {
   });
 };
 
+export const fetchProfile = (uid) => async dispatch => {
+  profileRef.child(uid).on("value", snapshot => {
+    dispatch({
+      type: FETCH_USER_PROFILE,
+      payload: snapshot.val()
+    });
+  });
+}
+
 export const fetchUser = () => dispatch => {
   authRef.onAuthStateChanged(user => {
     if (user) {
@@ -44,7 +68,7 @@ export const fetchUser = () => dispatch => {
         payload: null
       });
     }
-  });
+  })
 };
 
 export const signIn = (provider) => dispatch => {
