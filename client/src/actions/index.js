@@ -1,4 +1,4 @@
-import { readRef, authRef, profileRef, googleProvider, facebookProvider } from "../configs/fire";
+import { readRef, authRef, messageRef, profileRef, googleProvider, facebookProvider } from "../configs/fire";
 import {
   FETCH_USER,
   FETCH_USER_PROFILE,
@@ -11,9 +11,21 @@ export const setStartDate = (uid, date) => async dispatch => {
   profileRef
     .child(uid)
     .update(date);
+  readRef
+    .child(uid)
+    .remove();
 }
 
-/* Save Date */
+
+/* Save Message to Developer */
+export const postMessage = (uid, message, time) => async dispatch => {
+  messageRef
+    .child(uid)
+    .child(time)
+    .update(message);
+}
+
+/* Save Tribe */
 export const setTribe = (uid, tribe) => async dispatch => {
   profileRef
     .child(uid)

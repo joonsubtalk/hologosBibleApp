@@ -17,7 +17,7 @@ class Analytics extends Component {
   }
 
   toggleHeader = (evt) => {
-    const header = evt.target.dataset.header;
+    const header = evt.currentTarget.dataset.header;
     let type = '';
     switch(header) {
       case 'overview':
@@ -108,8 +108,8 @@ class Analytics extends Component {
       return (
         <div className={modifiedClassName}>
           <div className="analytics__container">
-            <div className="analytics__card">
-              <div className="analytics__header" onClick={this.toggleHeader} data-header="overview">Bible Reading Overview</div>
+            <div className="analytics__card" onClick={this.toggleHeader} data-header="overview">
+              <div className="analytics__header">Bible Reading Overview</div>
               <div className="analytics__wrapper">
                 <AnalyticsComponent title="Total Chapters Read" number={totalChaptersRead} />
                 <AnalyticsComponent title="Total Chapters Left" number={totalChaptersLeft} />
@@ -120,8 +120,8 @@ class Analytics extends Component {
               </div>
               <div className="analytics__bg"></div>
             </div>
-            <div className="analytics__card">
-              <div className="analytics__header" onClick={this.toggleHeader} data-header="ot">Old Testament</div>
+            <div className="analytics__card" onClick={this.toggleHeader} data-header="ot">
+              <div className="analytics__header">Old Testament</div>
               <div className="analytics__wrapper">
                   <AnalyticsComponent title="Chapters Read" number={otChaptersRead} />
                   <AnalyticsComponent title="Chapters Left" number={otChaptersLeft} />
@@ -129,8 +129,8 @@ class Analytics extends Component {
               </div>
               <div className="analytics__bg"></div>
             </div>
-            <div className="analytics__card">
-              <div className="analytics__header" onClick={this.toggleHeader} data-header="nt">New Testament</div>
+            <div className="analytics__card" onClick={this.toggleHeader} data-header="nt">
+              <div className="analytics__header">New Testament</div>
               <div className="analytics__wrapper">
                   <AnalyticsComponent title="Chapters Read" number={ntChaptersRead} />
                   <AnalyticsComponent title="Chapters Left" number={ntChaptersLeft} />
@@ -145,7 +145,7 @@ class Analytics extends Component {
     return (
       <div className="analytics">
         <div className="analytics__container">
-          <Loader />
+          Looks like you haven't read anything yet!
         </div>
       </div>
     )

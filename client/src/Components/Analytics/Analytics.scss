@@ -15,10 +15,10 @@
     flex-direction: column;
     position: relative;
     margin-bottom: 1em;
+    cursor: pointer;
   }
   &__header {
     font-size: 1.25em;
-    cursor: pointer;
     width: 100%;
     opacity: .7;
   }

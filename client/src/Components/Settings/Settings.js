@@ -8,9 +8,13 @@ class Settings extends Component {
   state = {
     date: '',
     today: '',
+    userMessage: '',
   }
 
   componentDidMount() {
+    const date = this.props.profile.planStartDate
+      ? this.props.profile.planStartDate
+      : new Date();
     this.setState({date: this.props.profile.planStartDate});
   }
 
@@ -23,11 +27,28 @@ class Settings extends Component {
   setDate = (date) => {
     const { profile } = this.props;
     const today = new Date();
-    const formatedDate = profile.planStartDate
+    const formatedDate = profile && profile.planStartDate
       ? format(profile.planStartDate, 'YYYY-MM-DD')
       : format(today, 'YYYY-MM-DD');
     this.setState({date : formatedDate});
-    console.log(profile.planStartDate);
+  }
+
+  postComment = () => {
+    const {userMessage} = this.state;
+    const {auth} = this.props;
+    const messageObj = {
+      message: userMessage,
+      email: auth.email,
+      name: auth.displayName,
+    }
+
+    this.props.postMessage(auth.uid, messageObj, format(new Date(), 'YYYY-MM-DD::HH:mm:ss'))
+    this.setState({userMessage: ''})
+  }
+
+  commentHandler = (evt) => {
+    const message = evt.target.value;
+    this.setState({userMessage: message});
   }
 
   dateChangeHandler = (evt) => {
@@ -50,9 +71,11 @@ class Settings extends Component {
   }
 
   render() {
-    const {date, today} = this.state;
+    const {date, today, userMessage} = this.state;
     const {auth, profile} = this.props;
-    const {tribe} = profile;
+    const tribe = profile && profile.tribe
+      ? profile.tribe
+      : 'none';
     return (
       <div className='settings'>
         Settings
@@ -64,10 +87,10 @@ class Settings extends Component {
         Set Start Date (todo)
         <input type="date"
           onChange={this.dateChangeHandler}
-          name="trip-start"
           value={date}
           max={today} />
         <button onClick={this.saveDateHandler}>Save Date?</button>
+        <p>Note: changing start date will erase all your progress.</p>
 
         <div>
           Select your tribe:
@@ -81,10 +104,27 @@ class Settings extends Component {
           </select>
         </div>
 
+        <div>
+            <h3>Goals:</h3>
+            <p>Not everyone's goals is to read the whole bible in a year.</p>
+            <pre>
+            What are your goals?<br />
+            Read whole bible<br />
+            Read Just NT<br />
+            Custom<br />
+              ><br />
+              Goals:  | Exclude:<br />
+            </pre>
+        </div>
+
+        <div>
+            <h2>Bug? Suggestions?</h2>
+            <textarea onChange={this.commentHandler} value={userMessage} placeholder="What would you like to say?"/>
+            <button onClick={this.postComment} disabled={userMessage.length < 10}>send comment</button>
+        </div>
+
         <ul>
-          <li>Allow users set new start date >> with warning</li>
           <li>Purchase Night Mode, or share referral code to gain achievement</li>
-          <li>Message developer for bugs</li>
           <li>Toggle One year goals</li>
         </ul>
       </div>
