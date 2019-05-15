@@ -1,0 +1,23 @@
+.goals {
+  font-size: 1rem;
+
+  &__container {
+    padding: 1em;
+  }
+  &__header {
+    margin-bottom: 1em;
+  }
+  &__area {
+    display: flex;
+  }
+  &__goals {
+
+  }
+  &__book {
+    margin-bottom: 1em;
+    cursor: pointer;
+  }
+  &__exclude {
+
+  }
+}

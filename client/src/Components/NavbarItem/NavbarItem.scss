@@ -4,18 +4,28 @@
   cursor: pointer;
   width: 100%;
   border-right: 1px solid rgba(36,37,38,0.2);
+  position: relative;
   &:last-child {
     border: none;
   }
   &__link {
     text-decoration: none;
     color: gray;
-    position: relative;
   }
   &__title {
     padding: 1em;
     font-size: .7em;
     text-transform: uppercase;
+  }
+  &__indicator {
+    position: absolute;
+    background-color: #f31431;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    right: 0;
+    top: -0.5em;
+    color: rgba(255,255,255,0.8);
   }
 }
 

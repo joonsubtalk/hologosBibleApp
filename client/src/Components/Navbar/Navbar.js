@@ -85,7 +85,7 @@ export default class Navbar extends Component {
                 const {label, link} = item;
                 const isActive = !!(pathname === link);
                 return (
-                  <NavbarItem key={label} label={label} link={link} isActive={isActive} />
+                  <NavbarItem key={label} label={label} link={link} isActive={isActive} alerts={label==='social' ? 2 : null} />
                 )
               })
             }

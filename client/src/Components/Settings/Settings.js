@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {format, compareDesc} from 'date-fns';
 import * as actions from '../../actions';
 import { VERSION_TRIBES } from '../../configs/constants';
+import Goals from '../Goals/Goals';
 
 class Settings extends Component {
   state = {
@@ -115,6 +116,7 @@ class Settings extends Component {
               ><br />
               Goals:  | Exclude:<br />
             </pre>
+            <Goals />
         </div>
 
         <div>
