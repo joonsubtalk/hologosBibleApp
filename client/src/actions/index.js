@@ -16,7 +16,6 @@ export const setStartDate = (uid, date) => async dispatch => {
     .remove();
 }
 
-
 /* Save Message to Developer */
 export const postMessage = (uid, message, time) => async dispatch => {
   messageRef
