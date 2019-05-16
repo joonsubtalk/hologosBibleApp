@@ -1,3 +1,33 @@
 .settings {
   font-size: 1rem;
+  padding: 1em;
+  font-family: 'Roboto', sans-serif;
+  &__container {
+    padding: 1em;
+    box-shadow: 0 6px 15px rgba(36,37,38,0.2);
+    background-color: #ffffff;
+    border-radius: 5px;
+  }
+
+  &__header {
+    font-size: 1.25em;
+    width: 100%;
+    opacity: .7;
+  }
+  &__section {
+    padding: 1em 0;
+  }
+  &__signout {
+    padding: 0;
+  }
+  &__date {
+    background-color: #ddd;
+    margin-left: 1em;
+  }
+  &__warning {
+    background-color:#f31431;
+    padding: .5em;
+    color: #fff;
+    opacity: .8;
+  }
 }

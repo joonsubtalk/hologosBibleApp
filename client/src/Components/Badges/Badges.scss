@@ -1,0 +1,23 @@
+.badges {
+  font-size: 1rem;
+  padding: 1em;
+  font-family: 'Roboto', sans-serif;
+  &__container {
+    padding: 1em;
+    box-shadow: 0 6px 15px rgba(36,37,38,0.2);
+    background-color: #ffffff;
+    border-radius: 5px;
+  }
+  &__calendar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+  &__date {
+    flex: 0 0 14%;
+    text-align: center;
+  }
+  &__month {
+
+  }
+}

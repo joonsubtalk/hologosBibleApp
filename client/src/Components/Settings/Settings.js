@@ -79,56 +79,58 @@ class Settings extends Component {
       : 'none';
     return (
       <div className='settings'>
-        Settings
-        <img src={auth && auth.photoURL} alt="face" />
-        <button onClick={this.props.signOut}>
-          sign off
-        </button>
-
-        Set Start Date (todo)
-        <input type="date"
-          onChange={this.dateChangeHandler}
-          value={date}
-          max={today} />
-        <button onClick={this.saveDateHandler}>Save Date?</button>
-        <p>Note: changing start date will erase all your progress.</p>
-
-        <div>
-          Select your tribe:
-          <select onChange={this.tribeChangeHandler} value={tribe}>
-            {
-              VERSION_TRIBES.map((tribe)=>{
-                const {initials, title} = tribe;
-                return <option value={initials} key={initials}>{title}</option>
-              })
-            }
-          </select>
-        </div>
-
-        <div>
+        <div className="settings__container">
+          <div className="settings__header">Settings</div>
+          <div className="settings__section">
+            <button className="settings__signout" onClick={this.props.signOut}>
+            Sign Out
+            </button>
+          </div>
+          <div className="settings__section">
+            Start Date
+            <input type="date" className="settings__date"
+              onChange={this.dateChangeHandler}
+              value={date}
+              max={today} />
+            <button onClick={this.saveDateHandler}>Save Date?</button>
+            <p className="settings__warning">Note: changing start date will erase all your progress.</p>
+          </div>
+          <div className="settings__section">
+              Select your tribe:
+              <select onChange={this.tribeChangeHandler} value={tribe}>
+                {
+                  VERSION_TRIBES.map((tribe)=>{
+                    const {initials, title} = tribe;
+                    return <option value={initials} key={initials}>{title}</option>
+                  })
+                }
+              </select>
+          </div>
+          <div className="settings__section">
+              <h2>Bug? Suggestions?</h2>
+              <textarea onChange={this.commentHandler} value={userMessage} placeholder="What would you like to say?"/>
+              <button onClick={this.postComment} disabled={userMessage.length < 10}>send comment</button>
+          </div>
+          <div className="settings__section">
             <h3>Goals:</h3>
-            <p>Not everyone's goals is to read the whole bible in a year.</p>
-            <pre>
-            What are your goals?<br />
-            Read whole bible<br />
-            Read Just NT<br />
-            Custom<br />
-              ><br />
-              Goals:  | Exclude:<br />
-            </pre>
-            <Goals />
+              <p>Not everyone's goals is to read the whole bible in a year.</p>
+              <pre>
+              What are your goals?<br />
+              Read whole bible<br />
+              Read Just NT<br />
+              Custom<br />
+                ><br />
+                Goals:  | Exclude:<br />
+              </pre>
+              <Goals />
+          </div>
+          <div className="settings__section">
+            <ul>
+              <li>Purchase Night Mode, or share referral code to gain achievement</li>
+              <li>Toggle One year goals</li>
+            </ul>
+          </div>
         </div>
-
-        <div>
-            <h2>Bug? Suggestions?</h2>
-            <textarea onChange={this.commentHandler} value={userMessage} placeholder="What would you like to say?"/>
-            <button onClick={this.postComment} disabled={userMessage.length < 10}>send comment</button>
-        </div>
-
-        <ul>
-          <li>Purchase Night Mode, or share referral code to gain achievement</li>
-          <li>Toggle One year goals</li>
-        </ul>
       </div>
     )
   }

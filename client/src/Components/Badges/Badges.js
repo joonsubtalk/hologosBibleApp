@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
-import {format, subDays} from 'date-fns';
+import {format, subDays, differenceInCalendarDays, startOfMonth, startOfWeek, endOfMonth, eachDay} from 'date-fns';
 import Loader from '../Loader/Loader';
 
 class Badges extends Component {
@@ -19,7 +19,6 @@ class Badges extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.read !== prevProps.read) {
       this.calculateBadgeReport();
-      console.log('mem')
     }
   }
 
@@ -68,12 +67,45 @@ class Badges extends Component {
     </div>)
   }
 
+  __renderCalendar = () => {
+    const {} = this.props;
+    const today = new Date();
+    const firstDayOfMonth = startOfMonth(today);
+    const endDayOfMonth = endOfMonth(today);
+    const monthArr = eachDay(firstDayOfMonth, endDayOfMonth)
+    const offsetDays = differenceInCalendarDays(
+      firstDayOfMonth,
+      startOfWeek(firstDayOfMonth)
+    )
+    console.log(offsetDays);
+    const offsetArr = [...Array(offsetDays)].map((d) => -1);
+    const sundayAlignedArr = [...offsetArr, ...monthArr]
+
+    return (
+      <div className="badges__calendar">
+        {
+          sundayAlignedArr.map((day,idx)=>{
+            const date = day !== -1
+              ? format(day, 'Do')
+              : ''
+            return <div className="badges__date" key={idx}>{date}</div>
+          })
+        }
+      </div>
+    )
+  }
+
   __badgeRender = () => {
     const {read} = this.props;
     return (
-      <div>
+      <div className="badges__container">
         <div>
           { !read ? <Loader /> : this.__renderWeeklyReport() }
+        </div>
+        <div className="badges__month">
+          {
+            this.__renderCalendar()
+          }
         </div>
         <ul>
           <li>Daily Achievements</li>

@@ -1,6 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
 
-export default class Social extends Component {
+class Social extends Component {
 
   uuidv4 = () => {
     return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
@@ -9,12 +11,15 @@ export default class Social extends Component {
   }
 
   render() {
+
+    const {auth} = this.props;
+
     return (
       <div className="social">
         <div className="social__container">
           <div className="social__wrapper">
             <div className="social__groups">
-              yo yo
+              <img className="social__whoami" src={auth && auth.photoURL} alt="face" />
             </div>
             <div className="social__cards">
               <div className="social__card">
@@ -40,3 +45,11 @@ export default class Social extends Component {
     )
   }
 }
+
+const mapStateToProps = ({ auth }) => {
+  return {
+    auth,
+  };
+};
+
+export default connect(mapStateToProps, actions)(Social);
