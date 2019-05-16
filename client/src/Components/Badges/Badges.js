@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
-import {format} from 'date-fns';
+import {format, subDays} from 'date-fns';
 import Loader from '../Loader/Loader';
 
 class Badges extends Component {
@@ -19,6 +19,7 @@ class Badges extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.read !== prevProps.read) {
       this.calculateBadgeReport();
+      console.log('mem')
     }
   }
 
@@ -55,7 +56,16 @@ class Badges extends Component {
 
     console.log(weekReport);
 
-    return (<div>hi</div>)
+    return (<div>
+      {
+        weekReport.map((num, idx)=> {
+          return (<div>
+              <span>{format(subDays(new Date(), 7-idx), 'ddd, DD')}</span> <span>- {num} chapters read</span>
+            </div>)
+        })
+
+      }
+    </div>)
   }
 
   __badgeRender = () => {

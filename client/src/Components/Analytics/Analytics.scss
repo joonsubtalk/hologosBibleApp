@@ -9,13 +9,16 @@
     background-color: #ffffff;
     padding: 1em 2em 1em 1em;
     border-radius: 5px;
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: flex-start;
     flex-direction: column;
     position: relative;
     margin-bottom: 1em;
     cursor: pointer;
+    &:first-child {
+      display: flex;
+    }
   }
   &__header {
     font-size: 1.25em;
@@ -76,6 +79,9 @@
 .analytics--showOverview {
   .analytics { //NAMESPACE
     &__card:nth-child(1) > .analytics__wrapper {
+      display: flex;
+    }
+    &__card {
       display: flex;
     }
   }

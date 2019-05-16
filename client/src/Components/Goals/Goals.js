@@ -96,10 +96,10 @@ export default class Goals extends Component {
           <div className="goals__quickActions">
             <form>
               <input type="checkbox" id="wholeBible" name="wholeBible" onChange={this.checkboxHandler} checked={hasWholeBiblePlan}/>
-              <label for="wholeBible">Read whole Bible</label>
+              <label htmlFor="wholeBible">Read whole Bible</label>
 
               <input type="checkbox" id="ntBible" name="ntBible" onChange={this.checkboxHandler} checked={hasNTBiblePlan}/>
-              <label for="ntBible">Read NT</label>
+              <label htmlFor="ntBible">Read NT</label>
             </form>
           </div>
           <div className="goals__area">

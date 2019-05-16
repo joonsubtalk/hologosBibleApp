@@ -11,17 +11,31 @@ export default class Social extends Component {
   render() {
     return (
       <div className="social">
-        {this.uuidv4()}
-        <ul>
-          <li>Allow users to create groups</li>
-          <li>Allow users to join groups</li>
-          <li>manage / assign admins</li>
-          <li>See progress of members</li>
-          <li>Give kudos to members</li>
-          <li>Give nudges to members</li>
-          <li>See Rank between members</li>
-        </ul>
-        <button>Create Group</button>
+        <div className="social__container">
+          <div className="social__wrapper">
+            <div className="social__groups">
+              yo yo
+            </div>
+            <div className="social__cards">
+              <div className="social__card">
+                Social Blurbs will populate here...
+              </div>
+              <div className="social__card">
+                {this.uuidv4()}
+                <ul>
+                  <li>Allow users to create groups</li>
+                  <li>Allow users to join groups</li>
+                  <li>manage / assign admins</li>
+                  <li>See progress of members</li>
+                  <li>Give kudos to members</li>
+                  <li>Give nudges to members</li>
+                  <li>See Rank between members</li>
+                </ul>
+              </div>
+            </div>
+            <button className="social__createGroup">Create Group</button>
+          </div>
+        </div>
       </div>
     )
   }
