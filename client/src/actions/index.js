@@ -1,10 +1,17 @@
-import { readRef, authRef, messageRef, profileRef, googleProvider, facebookProvider } from "../configs/fire";
+import { readRef, groupRef, authRef, messageRef, profileRef, googleProvider, facebookProvider } from "../configs/fire";
 import {
   FETCH_USER,
   FETCH_USER_PROFILE,
   FETCH_BOOK_CHAPTER_READ
 } from "./types";
 import { GOOGLE, FACEBOOK } from '../configs/constants';
+
+/* Create Group */
+export const postNewGroup = (uuid, {uid, title}) => async dispatch => {
+  groupRef
+    .child(uuid)
+    .update({title, test:'test'});
+}
 
 /* Save Date */
 export const setStartDate = (uid, date) => async dispatch => {

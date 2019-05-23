@@ -18,9 +18,12 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    console.log('update');
     if (this.props.auth !== prevProps.auth) {
-      this.props.fetchProfile(this.props.auth.uid);
+      if (this.props.auth)
+        this.props.fetchProfile(this.props.auth.uid);
     }
+    console.log('after')
   }
 
   render() {

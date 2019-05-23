@@ -13,10 +13,12 @@ class Settings extends Component {
   }
 
   componentDidMount() {
-    const date = this.props.profile.planStartDate
-      ? this.props.profile.planStartDate
-      : new Date();
-    this.setState({date: this.props.profile.planStartDate});
+    if (this.props.profile) {
+      const date = this.props.profile.planStartDate
+        ? this.props.profile.planStartDate
+        : new Date();
+      this.setState({date: this.props.profile.planStartDate});
+    }
   }
 
   componentDidUpdate(prevProps) {

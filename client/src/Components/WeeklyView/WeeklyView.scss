@@ -1,0 +1,48 @@
+.weeklyview {
+  font-size: 1rem;
+  width: 100%;
+  font-family: 'Lato', sans-serif;
+
+  &__container {
+
+  }
+  &__header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-direction: column
+  }
+  &__day {
+    font-size: 1em;
+  }
+  &__dateNumber {
+    opacity: .8;
+  }
+  &__content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    opacity: 0.25;
+  }
+  &__chapter {
+    font-size: 2.5em;
+  }
+  &__description {
+    font-size: .5em;
+    text-align: right;
+    display: none;
+  }
+}
+
+.weeklyview--worthy {
+  .weeklyview { //namespace
+    &__content {
+      opacity: 1;
+    }
+    &__description {
+      display: block;
+    }
+  }
+}

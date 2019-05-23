@@ -1,7 +1,9 @@
 .badges {
   font-size: 1rem;
   padding: 1em;
-  font-family: 'Roboto', sans-serif;
+  $SIZE: 25px;
+  font-family: 'Lato', sans-serif;
+
   &__container {
     padding: 1em;
     box-shadow: 0 6px 15px rgba(36,37,38,0.2);
@@ -16,8 +18,37 @@
   &__date {
     flex: 0 0 14%;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__datewrapper {
+    border-radius: 5px;
+    height: $SIZE;
+    width: $SIZE;
+    box-shadow: 0 4px 10px rgba(58, 84, 110, 0.1);
+    margin: .375em;
+  }
+  &__number {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: .8;
   }
   &__month {
-
+    box-shadow: 0 0 3px rgba(36,37,38,0.2);
+    border-radius: 10px;
+    padding: 1em;
+    background-color: #fff;
+  }
+  &__header {
+    text-align: center;
+    margin-bottom: 1em;
+  }
+  &__weekreport {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
   }
 }

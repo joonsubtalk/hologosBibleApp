@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import shortid from 'shortid';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
@@ -8,6 +9,19 @@ class Social extends Component {
     return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
       (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
     )
+  }
+
+  // __createGroup = () => {
+  //   console.log(shortid.generate());
+  // }
+
+  __createGroup = () => {
+    const uuid = shortid.generate();
+    console.log(uuid);
+    this.props.postNewGroup(uuid, {
+      uid: this.props.auth.uid,
+      title: 'test'
+    });
   }
 
   render() {
@@ -38,7 +52,7 @@ class Social extends Component {
                 </ul>
               </div>
             </div>
-            <button className="social__createGroup">Create Group</button>
+            <button className="social__createGroup" onClick={this.__createGroup}>+ Create Group</button>
           </div>
         </div>
       </div>
