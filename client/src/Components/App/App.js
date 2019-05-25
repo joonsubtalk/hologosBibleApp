@@ -8,7 +8,7 @@ import Settings from '../Settings/Settings';
 import requireAuth from '../Auth/requireAuth';
 import { BrowserRouter, Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchUser, fetchProfile } from '../../actions';
+import { fetchUser, fetchProfile, fetchBookChapterRead } from '../../actions';
 import Navbar from '../Navbar/Navbar';
 
 const NavWithRouter = withRouter(Navbar);
@@ -18,12 +18,14 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log('update');
     if (this.props.auth !== prevProps.auth) {
-      if (this.props.auth)
-        this.props.fetchProfile(this.props.auth.uid);
+      this.props.fetchProfile(this.props.auth.uid);
+      this.props.fetchBookChapterRead(this.props.auth.uid);
     }
-    console.log('after')
+    if (prevProps.read !== this.props.read && this.props.auth) {
+      debugger;
+      this.props.fetchBookChapterRead(this.props.auth.uid);
+    }
   }
 
   render() {
@@ -49,4 +51,4 @@ const mapStateToProps = ({ auth }) => {
   };
 };
 
-export default connect(mapStateToProps, { fetchUser, fetchProfile })(App);
+export default connect(mapStateToProps, { fetchUser, fetchProfile, fetchBookChapterRead })(App);

@@ -48,14 +48,15 @@ class Analytics extends Component {
 
   wholeNumberify = (top, bottom) => {
     const percent = `${((top)/(bottom)).toFixed(2)}`;
-    if ((top/bottom * 100) % 1 !== 0)
+    if ((top/bottom * 100) % 1 !== 0 || (top/bottom < 1))
       return `${percent}`;
     else
-    return `${percent.substring(0,percent.length - 3)}`;
+      return `${percent.substring(0,percent.length - 3)}`;
   }
 
   render() {
     const { read, profile } = this.props;
+    if (!profile) return <Loader />
     const {revealOverview, revealOT, revealNT} = this.state;
     const profileDate = profile && profile.planStartDate
       ?  profile.planStartDate
@@ -67,13 +68,13 @@ class Analytics extends Component {
       let otChaptersRead = 0;
       let ntChaptersRead = 0;
 
-      Object.keys(read).map(book => {
+      Object.keys(read).forEach((book) => {
         if (book <= LAST_OT_BOOK_ID) {
-          Object.keys(read[book]).map(va => {
+          Object.keys(read[book]).forEach(va => {
             otChaptersRead++;
           })
         } else {
-          Object.keys(read[book]).map(va => {
+          Object.keys(read[book]).forEach(va => {
             ntChaptersRead++;
           })
         }
@@ -90,12 +91,13 @@ class Analytics extends Component {
       const currentDate = format(new Date(), 'YYYY-MM-DD');
       const daysDiff = Math.abs(differenceInDays(
         currentDate,
-        new Date(fakeDate)
+        fakeDate
       )); // todo: should there be a +1?
 
-      const averageChaptersRead = this.wholeNumberify(totalChaptersRead, daysDiff+1);
+      const averageChaptersRead = this.wholeNumberify(totalChaptersRead, daysDiff);
       let daysRequired = ((totalChaptersLeft)/(totalChaptersRead/(daysDiff+1))).toFixed(2);
       const showProjectedDate = isFinite(Math.floor(totalChaptersLeft/averageChaptersRead));
+
       const optimizedDaysRequired = showProjectedDate
         ? Math.round(daysRequired)
         : '--';
@@ -111,8 +113,10 @@ class Analytics extends Component {
             <div className="analytics__card" onClick={this.toggleHeader} data-header="overview">
               <div className="analytics__header">Bible Reading Overview</div>
               <div className="analytics__wrapper">
-                <AnalyticsComponent title="Total Chapters Read" number={totalChaptersRead} />
-                <AnalyticsComponent title="Total Chapters Left" number={totalChaptersLeft} />
+                <div className="analytics__double">
+                  <AnalyticsComponent title="Chapters Read" number={totalChaptersRead} />
+                  <AnalyticsComponent title="Chapters Left" number={totalChaptersLeft} />
+                </div>
                 <AnalyticsComponent title="Days since plan started" number={daysDiff} />
                 <AnalyticsComponent title="Average Chapters read per day" number={averageChaptersRead} />
                 <AnalyticsComponent title="Required Days" number={optimizedDaysRequired} />

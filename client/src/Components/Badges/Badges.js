@@ -3,25 +3,27 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import {format, subDays, differenceInCalendarDays, startOfMonth, startOfWeek, endOfMonth, eachDay} from 'date-fns';
 import Loader from '../Loader/Loader';
-import { nullLiteral } from '@babel/types';
 import WeeklyView from '../WeeklyView/WeeklyView';
+import MonthlyView from '../MonthlyView/MonthlyView';
+
+
+const MONTH_OFFSET = 31;
 
 class Badges extends Component {
 
   state = {
-    reportArr : [],
-    MONTH_OFFSET: 32
+    reportArr: [],
+    MONTH_OFFSET: MONTH_OFFSET
   }
 
   componentDidMount() {
-    this.props.fetchBookChapterRead(this.props.auth.uid);
     if (this.props.read){
       this.calculateBadgeReport();
     }
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.read !== prevProps.read) {
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.read !== this.props.read) {
       if (this.props.read){
         this.calculateBadgeReport();
       }
@@ -30,25 +32,21 @@ class Badges extends Component {
 
   calculateBadgeReport = () => {
     const {read} = this.props;
-    const MONTH_OFFSET = 32;
-    const reportArr = new Array(415)
-    for(let a = 0, value = 0, size = 415; a < size; a++) reportArr[a] = value;
+    let newArr = new Array(MONTH_OFFSET * 12)
+    for(let a = 0, value = 0, size = newArr.length; a < size; a++) newArr[a] = value;
 
     for (let key in read) {
       if (read.hasOwnProperty(key)) {
-        // const filtered = read.filter(function (el) {
-        //   return el != null;
-        // });
         try {
           if(Array.isArray(read[key])) {
             read[key].forEach((chapter)=>{
               if (chapter) {
-                const readDate = format(new Date(read[key][1].timestamp), 'MMDD');
+                const readDate = format(new Date(chapter.timestamp), 'MMDD');
                 const idx = MONTH_OFFSET * readDate.substring(0,2) + Number.parseInt(readDate.substring(2));
-                if (reportArr[idx] === 0)
-                  reportArr[idx] = 1;
+                if (newArr[idx] === 0)
+                  newArr[idx] = 1;
                 else
-                  reportArr[idx] += 1;
+                  newArr[idx] += 1;
               }
             })
           }
@@ -57,10 +55,10 @@ class Badges extends Component {
               if (read.hasOwnProperty(key)) {
                 const readDate = format(new Date(read[key][objKey].timestamp), 'MMDD');
                 const idx = MONTH_OFFSET * readDate.substring(0,2) + Number.parseInt(readDate.substring(2));
-                if (reportArr[idx] === 0)
-                  reportArr[idx] = 1;
+                if (newArr[idx] === 0)
+                  newArr[idx] = 1;
                 else
-                  reportArr[idx] += 1;
+                  newArr[idx] += 1;
               }
             }
           }
@@ -69,19 +67,19 @@ class Badges extends Component {
         }
       }
     }
-    this.setState({reportArr : reportArr});
+    this.setState({reportArr : newArr});
   }
 
   __renderWeeklyReport = () => {
     const {reportArr} = this.state;
     const today = format(new Date(), 'MMDD');
-    const MONTH_OFFSET = 32;
     const idx = MONTH_OFFSET * Number.parseInt(today.substring(0,2)) + Number.parseInt(today.substring(2))
     const weekReport = reportArr.slice(idx-6,idx+1);
     return (<div className="badges__weekreport">
       {
         weekReport.map((num, idx)=> {
           return (<WeeklyView
+            key={format(subDays(new Date(), 6-idx), 'DD')}
             dayOfTheWeek={format(subDays(new Date(), 6-idx), 'ddd')}
             dateNumber={format(subDays(new Date(), 6-idx), 'DD')}
             chapterCount={num}/>
@@ -92,7 +90,6 @@ class Badges extends Component {
   }
 
   __renderCalendar = () => {
-    const {reportArr} = this.state;
     const today = new Date();
     const firstDayOfMonth = startOfMonth(today);
     const endDayOfMonth = endOfMonth(today);
@@ -101,11 +98,6 @@ class Badges extends Component {
       firstDayOfMonth,
       startOfWeek(firstDayOfMonth)
     )
-
-    const formatedDate = format(today, 'MMDD');
-    const MONTH_OFFSET = 32;
-    const idx = MONTH_OFFSET * Number.parseInt(formatedDate.substring(0,2))
-    const monthly = reportArr.slice(5*32, 5*32+31);
 
     const offsetArr = [...Array(offsetDays)].map((d) => -1);
     const sundayAlignedArr = [...offsetArr, ...monthArr]
@@ -166,6 +158,7 @@ class Badges extends Component {
           ? this.__badgeRender()
           : <Loader />
         }
+        <MonthlyView />
         <div className="badges__month">
           {
             reportArr ? this.__renderCalendar() : <Loader />

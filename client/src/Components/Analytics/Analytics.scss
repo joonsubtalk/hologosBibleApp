@@ -19,6 +19,12 @@
       display: flex;
     }
   }
+  &__double {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
   &__header {
     font-size: 1.25em;
     width: 100%;
@@ -68,10 +74,11 @@
     flex-direction: column;
     flex: 1;
     margin: 1em 0 0 1em;
+    width: 100%;
   }
 
   &__section {
-
+    flex: 1;
   }
 }
 

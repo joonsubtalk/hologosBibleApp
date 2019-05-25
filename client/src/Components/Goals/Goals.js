@@ -105,18 +105,12 @@ export default class Goals extends Component {
           <div className="goals__area">
             <div className="goals__goals" >
               {
-                bible.map((book) => {
-                  if (book && book.include)
-                  return <div className="goals__book" key={`${book.id}in`} data-id={book.id} onClick={this.toggleGoal}>{book.name}</div>
-                })
+                bible.map((book) => book && book.include && <div className="goals__book" key={`${book.id}in`} data-id={book.id} onClick={this.toggleGoal}>{book.name}</div>)
               }
             </div>
             <div className="goals__exclude">
               {
-                bible.map((book) => {
-                  if (book && !book.include)
-                  return <div className="goals__book" key={`${book.id}ex`} data-id={book.id} onClick={this.toggleGoal}>{book.name}</div>
-                })
+                bible.map((book) => book && !book.include && <div className="goals__book" key={`${book.id}ex`} data-id={book.id} onClick={this.toggleGoal}>{book.name}</div>)
               }
             </div>
           </div>

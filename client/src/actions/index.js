@@ -1,16 +1,30 @@
 import { readRef, groupRef, authRef, messageRef, profileRef, googleProvider, facebookProvider } from "../configs/fire";
 import {
   FETCH_USER,
+  FETCH_GROUP_FEED,
   FETCH_USER_PROFILE,
   FETCH_BOOK_CHAPTER_READ
 } from "./types";
 import { GOOGLE, FACEBOOK } from '../configs/constants';
 
+/* Get Group */
+export const fetchGroup = (uuid) => async dispatch => {
+  groupRef.child(uuid).on("value", snapshot => {
+    dispatch({
+      type: FETCH_GROUP_FEED,
+      payload: snapshot.val()
+    });
+  });
+};
+
 /* Create Group */
-export const postNewGroup = (uuid, {uid, title}) => async dispatch => {
+export const postNewGroup = (uuid, {title, date, admin}) => async dispatch => {
   groupRef
     .child(uuid)
-    .update({title, test:'test'});
+    .update({title, date, admin, members: [admin]});
+  profileRef
+    .child(admin)
+    .update({groups:[uuid]})
 }
 
 /* Save Date */

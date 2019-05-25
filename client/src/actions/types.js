@@ -1,5 +1,6 @@
 
 export const FETCH_USER = "FETCH_USER";
+export const FETCH_GROUP_FEED = "FETCH_GROUP_FEED";
 export const FETCH_USER_PROFILE = "FETCH_USER_PROFILE";
 
 export const FETCH_CHAPTER_READ = "FETCH_CHAPTER_READ";

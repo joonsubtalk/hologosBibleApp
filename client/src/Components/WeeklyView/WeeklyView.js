@@ -13,7 +13,7 @@ const WeeklyView = (props) => {
         </div>
         <div className="weeklyview__content">
           <div className="weeklyview__chapter">{chapterCount}</div>
-          <div className="weeklyview__description">chapters read</div>
+          <div className="weeklyview__description">chapters</div>
         </div>
       </div>
     </div>

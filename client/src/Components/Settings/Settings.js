@@ -17,7 +17,7 @@ class Settings extends Component {
       const date = this.props.profile.planStartDate
         ? this.props.profile.planStartDate
         : new Date();
-      this.setState({date: this.props.profile.planStartDate});
+      this.setState({date});
     }
   }
 
@@ -75,7 +75,7 @@ class Settings extends Component {
 
   render() {
     const {date, today, userMessage} = this.state;
-    const {auth, profile} = this.props;
+    const {profile} = this.props;
     const tribe = profile && profile.tribe
       ? profile.tribe
       : 'none';
