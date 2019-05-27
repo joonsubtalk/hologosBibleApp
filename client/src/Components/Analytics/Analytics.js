@@ -127,17 +127,21 @@ class Analytics extends Component {
             <div className="analytics__card" onClick={this.toggleHeader} data-header="ot">
               <div className="analytics__header">Old Testament</div>
               <div className="analytics__wrapper">
+                <div className="analytics__double">
                   <AnalyticsComponent title="Chapters Read" number={otChaptersRead} />
                   <AnalyticsComponent title="Chapters Left" number={otChaptersLeft} />
-                  <AnalyticsComponent title="Percent" number={otPercentRead} />
+                </div>
+                <AnalyticsComponent title="Percent" number={otPercentRead} />
               </div>
               <div className="analytics__bg"></div>
             </div>
             <div className="analytics__card" onClick={this.toggleHeader} data-header="nt">
               <div className="analytics__header">New Testament</div>
               <div className="analytics__wrapper">
+                <div className="analytics__double">
                   <AnalyticsComponent title="Chapters Read" number={ntChaptersRead} />
                   <AnalyticsComponent title="Chapters Left" number={ntChaptersLeft} />
+                </div>
                   <AnalyticsComponent title="Percent" number={ntPercentRead} />
               </div>
               <div className="analytics__bg"></div>

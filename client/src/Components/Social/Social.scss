@@ -44,3 +44,23 @@
     box-shadow: 0 6px 15px rgba(36,37,38,0.2);
   }
 }
+
+.group {
+  font-size: 1rem;
+  &__container {
+
+  }
+  &__header {
+
+  }
+  &__content {
+
+  }
+  &__card {
+    padding: 1.5em 1em;
+    box-shadow: 0 6px 15px rgba(36,37,38,0.2);
+    background-color: #ffffff;
+    border-radius: 5px;
+    margin-bottom: 1em;
+  }
+}

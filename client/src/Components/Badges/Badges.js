@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import {format, subDays, differenceInCalendarDays, startOfMonth, startOfWeek, endOfMonth, eachDay} from 'date-fns';
@@ -32,41 +33,24 @@ class Badges extends Component {
 
   calculateBadgeReport = () => {
     const {read} = this.props;
-    let newArr = new Array(MONTH_OFFSET * 12)
+    const newArr = new Array(MONTH_OFFSET * 12)
     for(let a = 0, value = 0, size = newArr.length; a < size; a++) newArr[a] = value;
 
-    for (let key in read) {
-      if (read.hasOwnProperty(key)) {
-        try {
-          if(Array.isArray(read[key])) {
-            read[key].forEach((chapter)=>{
-              if (chapter) {
-                const readDate = format(new Date(chapter.timestamp), 'MMDD');
-                const idx = MONTH_OFFSET * readDate.substring(0,2) + Number.parseInt(readDate.substring(2));
-                if (newArr[idx] === 0)
-                  newArr[idx] = 1;
-                else
-                  newArr[idx] += 1;
-              }
-            })
-          }
-          else {
-            for (let objKey in read[key]) {
-              if (read.hasOwnProperty(key)) {
-                const readDate = format(new Date(read[key][objKey].timestamp), 'MMDD');
-                const idx = MONTH_OFFSET * readDate.substring(0,2) + Number.parseInt(readDate.substring(2));
-                if (newArr[idx] === 0)
-                  newArr[idx] = 1;
-                else
-                  newArr[idx] += 1;
-              }
-            }
-          }
-        } catch(err) {
-          console.log('err', err)
-        }
-      }
-    }
+    _.chain(read).map((readChapters, bid)=>{
+      return _.chain(readChapters)
+      .map(({...timestamp}, chapter) => {
+        return {...timestamp, bid, chapter: Number.parseInt(chapter)}
+      })
+      .filter(obj => obj.timestamp)
+      .values()
+      .value()
+    }).flatten()
+    .value().forEach(chapter =>{
+        const readDate = format(new Date(chapter.timestamp), 'MMDD');
+        const idx = MONTH_OFFSET * readDate.substring(0,2) + Number.parseInt(readDate.substring(2));
+        newArr[idx] = newArr[idx] === 0 ? 1 : newArr[idx] += 1;
+    })
+
     this.setState({reportArr : newArr});
   }
 
@@ -143,6 +127,7 @@ class Badges extends Component {
           <li>Global/Group/Tribe Rankings</li>
           <li>Must be in a social group to participate for accountability</li>
         </ul>
+        <div><pre>{JSON.stringify(read, null, 2) }</pre></div>
       </div>)
   }
 

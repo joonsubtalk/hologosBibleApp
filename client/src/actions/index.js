@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { readRef, groupRef, authRef, messageRef, profileRef, googleProvider, facebookProvider } from "../configs/fire";
 import {
   FETCH_USER,
@@ -7,24 +8,44 @@ import {
 } from "./types";
 import { GOOGLE, FACEBOOK } from '../configs/constants';
 
+export const fetchUsersRead = (uuid) => async dispatch => {
+  const groupTest = await readRef.child(uuid).once('value', readSnapshot => readSnapshot.val());
+  return groupTest;
+}
+
 /* Get Group */
 export const fetchGroup = (uuid) => async dispatch => {
-  groupRef.child(uuid).on("value", snapshot => {
+
+    const groupReference = await groupRef.child(uuid);
+    const groupName = await groupReference.child('title').once('value')
+    const groupMembers = await groupReference.child('members').once('value');
+    const memberSnapshotArr = _.keys(groupMembers.val())
+
+    const groupTitle = groupName.val();
+
+    const memberReadingArr = await Promise.all( memberSnapshotArr.map(async d =>{
+      const memberReadObj = await readRef.child(d).once('value');
+        return {[d]: memberReadObj.val()}
+      })
+    );
     dispatch({
       type: FETCH_GROUP_FEED,
-      payload: snapshot.val()
-    });
-  });
+      payload: {
+        title: groupTitle,
+        members: memberReadingArr,
+      },
+    })
 };
 
 /* Create Group */
 export const postNewGroup = (uuid, {title, date, admin}) => async dispatch => {
+  const newObj = {title, date, admin, 'members':{[admin] : date}}
   groupRef
     .child(uuid)
-    .update({title, date, admin, members: [admin]});
+    .update(newObj)
   profileRef
     .child(admin)
-    .update({groups:[uuid]})
+    .update({'groups':{[uuid] : date}})
 }
 
 /* Save Date */

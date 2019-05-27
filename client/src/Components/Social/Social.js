@@ -1,13 +1,21 @@
 import React, { Component } from 'react';
 import shortid from 'shortid';
+import _ from 'lodash';
 import { connect } from 'react-redux';
+import {format} from 'date-fns';
 import * as actions from '../../actions';
 import Modal from '../Modal/Modal';
+import Group from '../Group/Group';
+
+
+const MONTH_OFFSET = 31;
 
 class Social extends Component {
 
   state = {
     showModal: false,
+    readSocialFeed: [],
+    socialCalendar: [],
   }
 
   // uuidv4 = () => {
@@ -17,15 +25,77 @@ class Social extends Component {
   // }
 
   componentDidMount() {
-    if (this.props.profile && this.props.profile.groups && this.props.profile.groups[0]) {
-      this.props.fetchGroup(this.props.profile.groups[0])
+    if (this.props.profile && this.props.profile.groups) {
+      for (let key in this.props.profile.groups) {
+        if (this.props.profile.groups.hasOwnProperty(key)) {
+          this.props.fetchGroup(key)
+        }
+      }
+    }
+
+    if (this.props.group) {
+      this.__sortGroupFeed();
     }
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.profile !== prevProps.profile) {
-      this.props.fetchGroup(this.props.profile.groups[0])
+    if (this.props.profile !== prevProps.profile && this.props.profile.groups) {
+      for (let key in this.props.profile.groups) {
+        if (this.props.profile.groups.hasOwnProperty(key)) {
+          this.props.fetchGroup(key)
+        }
+      }
     }
+
+    if (this.props.group !== prevProps.group) {
+      this.__sortGroupFeed();
+    }
+  }
+
+  __calculateYearlyReport = (read, name) => {
+
+    const val = _.chain(read).map((readChapters, bid)=>{
+      return _.chain(readChapters)
+      .map(({...timestamp}, chapter) => {
+        return {...timestamp, bid, chapter: Number.parseInt(chapter), name}
+      })
+      .filter(obj => obj.timestamp)
+      .values()
+      .value()
+    }).flatten()
+    .value()
+
+    return val;
+  }
+
+  __sortGroupFeed = () => {
+    const {members} = this.props.group;
+
+    if (!members) return;
+    let socialGroupArray = []
+    const newArr = new Array(MONTH_OFFSET * 12)
+    for(let a = 0, value = null, size = newArr.length; a < size; a++) newArr[a] = value;
+
+    // why for loops? perf.
+    for (let memberId = 0; memberId < members.length; memberId ++) {
+      for (var key in members[memberId]) {
+        if (members[memberId].hasOwnProperty(key)) {
+          socialGroupArray = [...socialGroupArray, ...this.__calculateYearlyReport(members[memberId][key], key)]
+        }
+      }
+    }
+
+    socialGroupArray.forEach(chapter =>{
+      const readDate = format(new Date(chapter.timestamp), 'MMDD');
+      const idx = MONTH_OFFSET * readDate.substring(0,2) + Number.parseInt(readDate.substring(2));
+      if (newArr[idx] === null)
+        newArr[idx] = [chapter];
+      else {
+        newArr[idx] = [...newArr[idx], chapter];
+      }
+    })
+
+    this.setState({readSocialFeed: newArr});
   }
 
   __toggleModal = () => {
@@ -51,8 +121,13 @@ class Social extends Component {
 
   render() {
 
-    const {auth, profile, group} = this.props;
-    const { showModal } = this.state;
+    const {auth, group} = this.props;
+    const { showModal, readSocialFeed } = this.state;
+
+    const today = format(new Date(), 'MMDD');
+    const idx = MONTH_OFFSET * Number.parseInt(today.substring(0,2)) + Number.parseInt(today.substring(2))
+    const weekReport = readSocialFeed.slice(idx-6,idx+1);
+    console.log(weekReport)
 
     return (
       <div className="social">
@@ -67,7 +142,14 @@ class Social extends Component {
                 Social Blurbs will populate here...
               </div>
               {
-                group.title
+                weekReport &&
+                group &&
+                group.members &&
+                _.reverse(weekReport).map((report, idx)=>{
+                  const {title} = group;
+                  if (!report) return null;
+                  return <Group key={idx} title={title} report={report} />
+                })
               }
               <div className="social__card">
                 <ul>
