@@ -23,16 +23,19 @@ class Home extends Component {
 
   render() {
     const { bible } = this.state;
-    const {auth} = this.props;
+    const {auth, profile} = this.props;
     const finishedLoading = !!(bible && auth);
     return (
       <div className="home">
         <div className="home__container">
-          <Analytics />
+          {
+            finishedLoading && <Analytics />
+          }
           {
             finishedLoading
             ?
-            (bible &&
+            (
+            bible &&
             bible.meta &&
             bible.meta.length > 0 &&
             bible.meta.map((bibleBook) => {
@@ -50,9 +53,10 @@ class Home extends Component {
   }
 }
 
-const mapStateToProps = ({ auth }) => {
+const mapStateToProps = ({ auth, profile }) => {
   return {
     auth,
+    profile,
   };
 };
 

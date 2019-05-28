@@ -69,12 +69,14 @@ export default class Navbar extends Component {
   }
 
   render() {
-    const { showMenu, menuItems } = this.state;
+    const { showMenu, menuItems, currentPath } = this.state;
     const modifiedClass = showMenu
     ? `navbar navbar--appear`
     : `navbar`
 
     const {pathname} = this.props.location;
+
+    if (this.props.location.pathname === '/') return null;
 
     return (
       <nav className={modifiedClass}>
@@ -85,7 +87,7 @@ export default class Navbar extends Component {
                 const {label, link} = item;
                 const isActive = !!(pathname === link);
                 return (
-                  <NavbarItem key={label} label={label} link={link} isActive={isActive} alerts={label==='social' ? 2 : null} />
+                  <NavbarItem key={label} label={label} link={link} isActive={isActive} alerts={null} />
                 )
               })
             }

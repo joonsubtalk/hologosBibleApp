@@ -4,6 +4,7 @@ import { signIn } from "../../actions";
 import { FACEBOOK, GOOGLE } from '../../configs/constants'
 import PropTypes from "prop-types";
 import Loader from "../Loader/Loader";
+import Welcome from "../Welcome/Welcome";
 
 class Login extends Component {
   static contextTypes = {
@@ -25,12 +26,15 @@ class Login extends Component {
             ? <Loader />
             : (
             <>
-              <button className="login__facebookBtn" onClick={(facebook)=>signIn(FACEBOOK)}>
-                Login with Facebook
-              </button>
-              <button className="login__googleBtn" onClick={(google)=>signIn(GOOGLE)}>
-                Login with Google
-              </button>
+              <Welcome/>
+              <div className="login__buttons">
+                <button className="login__facebookBtn" onClick={(facebook)=>signIn(FACEBOOK)}>
+                  Login with Facebook
+                </button>
+                <button className="login__googleBtn" onClick={(google)=>signIn(GOOGLE)}>
+                  Login with Google
+                </button>
+              </div>
             </>
             )
           }

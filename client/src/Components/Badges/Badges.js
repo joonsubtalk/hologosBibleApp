@@ -127,7 +127,6 @@ class Badges extends Component {
           <li>Global/Group/Tribe Rankings</li>
           <li>Must be in a social group to participate for accountability</li>
         </ul>
-        <div><pre>{JSON.stringify(read, null, 2) }</pre></div>
       </div>)
   }
 

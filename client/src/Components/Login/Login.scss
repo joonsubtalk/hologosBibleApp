@@ -18,12 +18,22 @@
     padding: 1em;
     color: $BTN_WHITE;
     cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 1em;
   }
   &__googleBtn {
     background-color: $GOOGLE_RED;
     border: none;
     padding: 1em;
+    border-radius: 5px;
     color: $BTN_WHITE;
     cursor: pointer;
+  }
+
+  &__buttons {
+    position: fixed;
+    bottom: 1em;
+    display: flex;
+    flex-direction: column;
   }
 }

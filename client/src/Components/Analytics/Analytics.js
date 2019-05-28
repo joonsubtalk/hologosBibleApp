@@ -48,7 +48,7 @@ class Analytics extends Component {
 
   wholeNumberify = (top, bottom) => {
     const percent = `${((top)/(bottom)).toFixed(2)}`;
-    if ((top/bottom * 100) % 1 !== 0 || (top/bottom < 1))
+    if ((top/bottom * 100) % 1 !== 0)
       return `${percent}`;
     else
       return `${percent.substring(0,percent.length - 3)}`;

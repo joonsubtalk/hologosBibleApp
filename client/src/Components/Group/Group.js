@@ -5,23 +5,20 @@ import _ from 'lodash';
 import {SIMPLE_BIBLE} from '../../configs/constants';
 
 const Group = props => {
+
   const {title, report} = props;
-  const now = new Date();
   return (
     <div className="group">
       <div className="group__container">
         <div className="group__content">
           { report &&
-            report.map(day => {
-              var result = differenceInHours(
-                now,
-                new Date(day.timestamp)
+            report.map((day) => {
+              var result = format(
+                new Date(day.timestamp),
+                'MM/DD/YYYY'
               )
-              result > 24
-               ? result = `${format(day.timestamp, 'MMM Mo')}`
-               : result = `${result} hrs`
-              return <div className="group__card">
-              {result} - {day.name} read the book of {SIMPLE_BIBLE.meta[day.bid].book} at chapter: {day.chapter}
+              return <div key={day.timestamp} className="group__card">
+            {result} someone read {SIMPLE_BIBLE.meta[day.bid].book} {day.chapter}
               </div>
             })
           }

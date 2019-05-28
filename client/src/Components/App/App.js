@@ -18,7 +18,7 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.auth !== prevProps.auth) {
+    if (this.props.auth && this.props.auth !== prevProps.auth) {
       this.props.fetchProfile(this.props.auth.uid);
       this.props.fetchBookChapterRead(this.props.auth.uid);
     }
