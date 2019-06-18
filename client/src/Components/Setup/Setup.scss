@@ -1,4 +1,146 @@
 .setup {
   font-size: 1rem;
+  padding: 1em;
+  font-family: 'Lato', sans-serif;
+
+  &__container {
+    padding: 2em 1.5em;
+    box-shadow: 0 6px 15px rgba(36,37,38,0.2);
+    background-color: #ffffff;
+    border-radius: 5px;
+  }
+
+  &__selection {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__header {
+
+  }
+
+  &__logo {
+    $SIZE: 1.75em;
+    margin-right: .75em;
+    height: $SIZE;
+    width: $SIZE;
+  }
+
+  &__graphic {
+    display: flex;
+    flex-direction: row;
+    align-items: left;
+  }
+
+  &__label {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__subheader {
+    font-size: .7em;
+  }
+
+  &__version {
+    padding: 1em;
+    display: flex;
+    cursor: pointer;
+  }
+
+  &__initials {
+    font-size: 1rem;
+    opacity: 1;
+  }
+
+  &__wrapper {
+    font-family: 'Lato', sans-serif;
+  }
+  &__label {
+    text-transform: uppercase;
+    opacity: .5;
+    letter-spacing: .2em;
+    font-size: .7em;
+  }
+  &__verse {
+    text-align: right;
+  }
+  &__input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #9e9e9e;
+    border-radius: 0;
+    outline: none;
+    height: 2em;
+    width: 100%;
+    font-size: 1.5em;
+    margin: 0 0 8px 0;
+    padding: 0;
+    box-shadow: none;
+    box-sizing: content-box;
+    transition: box-shadow .3s, border .3s;
+  }
+  &__header {
+    font-size: 1.25em;
+    width: 100%;
+    text-align: center;
+    margin-bottom: .25em;
+  }
+  &__subheader {
+    font-size: 1em;
+    opacity: .7;
+    margin-bottom: 2em;
+    text-align: center;
+  }
+
+  &__title {
+    font-size: .7em;
+  }
+
+  &__actionable {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 1em;
+  }
+
+  &__actionable-column {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    padding-top: 1em;
+  }
+
+  &__next {
+    font-size: 1.2em;
+    border-radius: 20px;
+    padding: .25em 1em;
+    border: none;
+    cursor: pointer;
+  }
+  &__next:disabled {
+    opacity: .2;
+  }
+  &__primary {
+    color: white;
+    background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: .75em 1.5em;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-bottom: 1em;
+  }
+  &__secondary {
+    padding: .75em 1.5em;
+    border: 2px solid #764ba2;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-bottom: 1em;
+  }
+}
+
+.setup__version--active.setup__version {
+
+  color: #667eea;
+  box-shadow: 0px 0px 0px 6px #667eea;
+  border-radius: 15px;
 
 }

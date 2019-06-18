@@ -10,11 +10,35 @@ class Home extends Component {
 
   state = {
     bible : [],
+    showMain : false,
+    revealTimer : () => {},
   }
 
   componentDidMount() {
     this.loadBible(meta);
     this.props.fetchBookChapterRead(this.props.auth.uid);
+    this.revealMainTimer();
+    if (this.props.profile){this.setState({showMain: true})}
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // if (this.props.profile){
+    //   if (prevProps.profile.username !== this.props.profile.username) {
+
+    //   }
+    // }
+    if (prevProps.profile !== this.props.profile) {
+      if (this.props.profile === null || this.props.profile.username === undefined){
+        clearTimeout(this.state.revealTimer);
+        this.props.history.push('/setup/1')
+      }
+    }
+  }
+
+  revealMainTimer = () => {
+    const self = this;
+    const timer = setTimeout(() => { self.setState({showMain: true}) }, 3000);
+    this.setState({revealTimer : timer});
   }
 
   loadBible = (data) => {
@@ -22,9 +46,9 @@ class Home extends Component {
   }
 
   render() {
-    const { bible } = this.state;
+    const { bible, showMain } = this.state;
     const {auth, profile} = this.props;
-    const finishedLoading = !!(bible && auth);
+    const finishedLoading = showMain && !!(bible && auth && profile);
     return (
       <div className="home">
         <div className="home__container">
@@ -32,8 +56,9 @@ class Home extends Component {
             finishedLoading && <Analytics />
           }
           {
-            finishedLoading
-            ?
+            !finishedLoading
+            ? (<Loader />)
+            :
             (
             bible &&
             bible.meta &&
@@ -45,7 +70,6 @@ class Home extends Component {
               }
               return null;
             }))
-            : (<Loader />)
           }
         </div>
       </div>

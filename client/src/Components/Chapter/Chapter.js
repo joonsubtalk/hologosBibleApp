@@ -10,12 +10,16 @@ class Chapter extends Component {
     this.throttledChapterToggle = throttle(this.throttledChapterToggle.bind(this), 750)
   }
 
+  handleAreYouSure = (bid, chapter, uid) => {
+    this.props.removeChapterRead(bid, chapter, uid);
+  }
+
   handleChapterToggle = evt => {
-    const { upsertChapterRead, removeChapterRead, hasRead, auth, chapter, bid } = this.props;
+    const { upsertChapterRead, hasRead, auth, chapter, bid } = this.props;
     evt.preventDefault();
 
     if (hasRead) {
-      removeChapterRead(bid, chapter, auth.uid);
+      this.handleAreYouSure(bid, chapter, auth.uid);
     } else {
       const date = new Date();
       const timestamp = date.getTime();

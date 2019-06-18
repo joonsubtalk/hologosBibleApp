@@ -48,14 +48,30 @@ export const postNewGroup = (uuid, {title, date, admin}) => async dispatch => {
     .update({'groups':{[uuid] : date}})
 }
 
+/* Join new group */
+export const setGroupJoin = (uid, uuid, groupId, groupObj) => async dispatch => {
+  groupRef
+    .child(uuid)
+    .child('members')
+    .update(groupId)
+  profileRef
+    .child(uid)
+    .child('groups')
+    .update(groupObj);
+}
+
+/* Set UserName */
+export const setUsername = (uid, username) => async dispatch => {
+  profileRef
+    .child(uid)
+    .update(username);
+}
+
 /* Save Date */
 export const setStartDate = (uid, date) => async dispatch => {
   profileRef
     .child(uid)
     .update(date);
-  readRef
-    .child(uid)
-    .remove();
 }
 
 /* Save Message to Developer */

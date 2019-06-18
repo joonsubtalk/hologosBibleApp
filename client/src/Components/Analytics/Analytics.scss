@@ -2,6 +2,9 @@
   font-size: 1rem;
   font-family: 'Roboto', sans-serif;
   &__container {
+    position: relative;
+    top: 0;
+    transition: top .5s ease-in;
   }
   &__card {
     box-shadow: 0 6px 15px rgba(36,37,38,0.2);
@@ -105,6 +108,17 @@
   .analytics { //NAMESPACE
     &__card:nth-child(3) > .analytics__wrapper {
       display: flex;
+    }
+  }
+}
+
+.analytics--fixed {
+  .analytics { //NAMESPACE
+    &__container {
+      position: fixed;
+      top: 1em;
+      z-index: 500;
+      width: calc(100% - 2em);
     }
   }
 }

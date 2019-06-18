@@ -15,7 +15,7 @@
   &__facebookBtn {
     background-color: $FACEBOOK_BLUE;
     border: none;
-    padding: 1em;
+    padding: .7em 1em;
     color: $BTN_WHITE;
     cursor: pointer;
     border-radius: 5px;
@@ -24,7 +24,7 @@
   &__googleBtn {
     background-color: $GOOGLE_RED;
     border: none;
-    padding: 1em;
+    padding: .7em 1em;
     border-radius: 5px;
     color: $BTN_WHITE;
     cursor: pointer;
@@ -32,8 +32,14 @@
 
   &__buttons {
     position: fixed;
-    bottom: 1em;
+    bottom: 2em;
     display: flex;
     flex-direction: column;
+  }
+
+  &__disclaimer {
+    position: absolute;
+    bottom: .75em;
+    font-size: .7em;
   }
 }

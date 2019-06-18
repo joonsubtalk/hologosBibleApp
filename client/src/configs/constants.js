@@ -4,7 +4,6 @@ export const GOOGLE = 'GOOGLE';
 export const ESV = {};
 
 export const VERSION_TRIBES = [
-
   {
     initials:"CSB",
     title: "Christian Standard Bible"

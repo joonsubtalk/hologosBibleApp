@@ -77,6 +77,7 @@ export default class Navbar extends Component {
     const {pathname} = this.props.location;
 
     if (this.props.location.pathname === '/') return null;
+    if (this.props.location.pathname.indexOf('/setup') === 0) return null;
 
     return (
       <nav className={modifiedClass}>

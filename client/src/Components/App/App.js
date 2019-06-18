@@ -5,6 +5,7 @@ import Badges from '../Badges/Badges';
 import Login from '../Login/Login';
 import Welcome from '../Welcome/Welcome';
 import Settings from '../Settings/Settings';
+import Setup from '../Setup/Setup';
 import requireAuth from '../Auth/requireAuth';
 import { BrowserRouter, Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -23,7 +24,6 @@ class App extends Component {
       this.props.fetchBookChapterRead(this.props.auth.uid);
     }
     if (prevProps.read !== this.props.read && this.props.auth) {
-      debugger;
       this.props.fetchBookChapterRead(this.props.auth.uid);
     }
   }
@@ -34,6 +34,7 @@ class App extends Component {
         <div className='container'>
           <Route exact path='/' component={Login} />
           <Route exact path='/welcome' component={Welcome} />
+          <Route path='/setup/:pid' component={requireAuth(Setup)} />
           <Route exact path='/home' component={requireAuth(Home)} />
           <Route exact path='/badges' component={requireAuth(Badges)} />
           <Route exact path='/social' component={requireAuth(Social)} />

@@ -35,6 +35,9 @@ class Login extends Component {
                   Login with Google
                 </button>
               </div>
+              <div className="login__disclaimer">
+                We don't post anything to Facebook.
+              </div>
             </>
             )
           }

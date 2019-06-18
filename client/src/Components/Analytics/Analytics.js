@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
+import throttle from 'lodash/throttle';
 import * as actions from '../../actions';
 import {format, differenceInDays, addDays} from 'date-fns';
 import {OT_CHAPTERS,
@@ -10,10 +11,32 @@ import Loader from '../Loader/Loader';
 
 class Analytics extends Component {
 
-  state = {
-    revealOverview : false,
-    revealOT: false,
-    revealNT: false,
+  constructor(props) {
+    super(props);
+    this.state = {
+      revealOverview : false,
+      revealOT: false,
+      revealNT: false,
+      isDetached: false
+    }
+    this.throttledScroll = throttle(this.throttledScroll.bind(this), 200);
+  }
+
+  componentDidMount(){
+    window.addEventListener('scroll', this.throttledScroll, false);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.throttledScroll, false);
+  }
+
+  throttledScroll = (evt) => {
+    const scrollTop = (window.pageYOffset !== undefined)
+      ? window.pageYOffset
+      : (document.documentElement
+        || document.body.parentNode
+        || document.body).scrollTop;
+    this.setState({isDetached: scrollTop > 50})
   }
 
   toggleHeader = (evt) => {
@@ -47,6 +70,10 @@ class Analytics extends Component {
   }
 
   wholeNumberify = (top, bottom) => {
+
+    // case where user just started...
+    if (bottom === 0) return top;
+
     const percent = `${((top)/(bottom)).toFixed(2)}`;
     if ((top/bottom * 100) % 1 !== 0)
       return `${percent}`;
@@ -57,7 +84,7 @@ class Analytics extends Component {
   render() {
     const { read, profile } = this.props;
     if (!profile) return <Loader />
-    const {revealOverview, revealOT, revealNT} = this.state;
+    const {revealOverview, revealOT, revealNT, isDetached} = this.state;
     const profileDate = profile && profile.planStartDate
       ?  profile.planStartDate
       : format(new Date(), 'YYYY-MM-DD');
@@ -105,7 +132,7 @@ class Analytics extends Component {
         ? format(addDays(currentDate, Math.floor(totalChaptersLeft/averageChaptersRead)), 'D, MMM YYYY')
         : '--';
 
-      const modifiedClassName = `analytics ${revealOverview ? 'analytics--showOverview' : ''} ${revealOT ? 'analytics--showOT' : ''} ${revealNT ? 'analytics--showNT' : ''}`
+      const modifiedClassName = `analytics ${isDetached ? 'analytics--fixed' : ''} ${revealOverview ? 'analytics--showOverview' : ''} ${revealOT ? 'analytics--showOT' : ''} ${revealNT ? 'analytics--showNT' : ''}`
 
       return (
         <div className={modifiedClassName}>
