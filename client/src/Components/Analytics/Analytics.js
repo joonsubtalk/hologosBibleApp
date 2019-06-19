@@ -74,6 +74,8 @@ class Analytics extends Component {
     // case where user just started...
     if (bottom === 0) return top;
 
+    return top/bottom;
+
     const percent = `${((top)/(bottom)).toFixed(2)}`;
     if ((top/bottom * 100) % 1 !== 0)
       return `${percent}`;

@@ -8,6 +8,7 @@ import Username from './Username';
 import Tribe from './Tribe';
 import DateSelection from './DateSelection';
 import JoinGroup from './JoinGroup';
+import PreSelection from './PreSelection';
 
 class Setup extends Component {
 
@@ -57,16 +58,17 @@ class Setup extends Component {
       {[groupId]: new Date()});
   }
 
-  dateHandler = (evt) => {
-    this.setState({startDate: evt.target.value})
-  }
-
   groupInputHandler = (evt) => {
     this.setState({groupId: evt.target.value});
   }
 
-  saveDateHandler = (evt) => {
-    this.props.setStartDate(this.props.auth.uid, {planStartDate: this.state.startDate});
+  saveDateHandler = (evt, {date, skip}) => {
+    evt.preventDefault();
+    this.props.setStartDate(this.props.auth.uid, {planStartDate: date});
+    if (skip) {
+      const setupPage = Number.parseInt(this.props.match.params.pid);
+      this.props.history.push(`/setup/${setupPage+2}`);
+    }
   }
 
   versionHandler = (evt) => {
@@ -108,16 +110,19 @@ class Setup extends Component {
           {
             setupPage === 3 &&
             (
-              <DateSelection dateChangeHandler={this.dateHandler} saveDateHandler={this.saveDateHandler} date={startDate} today={()=>{new Date()}} />
+              <DateSelection saveDateHandler={this.saveDateHandler} />
             )
           }
           {
             setupPage === 4 &&
             (
-              <div>
-                {groupId}
-                <JoinGroup joinGroupHandler={this.joinGroup} groupInputHandler={this.groupInputHandler} groupId={groupId} />
-              </div>
+              <PreSelection />
+            )
+          }
+          {
+            setupPage === 5 &&
+            (
+              <JoinGroup joinGroupHandler={this.joinGroup} groupInputHandler={this.groupInputHandler} groupId={groupId} />
             )
           }
           </form>

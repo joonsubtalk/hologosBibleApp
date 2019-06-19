@@ -22,11 +22,6 @@ class Home extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // if (this.props.profile){
-    //   if (prevProps.profile.username !== this.props.profile.username) {
-
-    //   }
-    // }
     if (prevProps.profile !== this.props.profile) {
       if (this.props.profile === null || this.props.profile.username === undefined){
         clearTimeout(this.state.revealTimer);

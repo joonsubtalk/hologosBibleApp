@@ -86,12 +86,14 @@ class Social extends Component {
     }
 
     socialGroupArray.forEach(chapter =>{
-      const readDate = format(new Date(chapter.timestamp), 'MMDD');
-      const idx = MONTH_OFFSET * readDate.substring(0,2) + Number.parseInt(readDate.substring(2));
-      if (newArr[idx] === null)
-        newArr[idx] = [chapter];
-      else {
-        newArr[idx] = [...newArr[idx], chapter];
+      if (chapter.timestamp !== -1) {
+        const readDate = format(new Date(chapter.timestamp), 'MMDD');
+        const idx = MONTH_OFFSET * readDate.substring(0,2) + Number.parseInt(readDate.substring(2));
+        if (newArr[idx] === null)
+          newArr[idx] = [chapter];
+        else {
+          newArr[idx] = [...newArr[idx], chapter];
+        }
       }
     })
 
@@ -127,7 +129,6 @@ class Social extends Component {
     const today = format(new Date(), 'MMDD');
     const idx = MONTH_OFFSET * Number.parseInt(today.substring(0,2)) + Number.parseInt(today.substring(2))
     const weekReport = readSocialFeed.slice(idx-6,idx+1);
-    console.log(weekReport)
 
     return (
       <div className="social">
@@ -153,7 +154,6 @@ class Social extends Component {
               }
               <div className="social__card">
                 <ul>
-                  <li></li>
                   <li>Allow users to join groups</li>
                   <li>manage / assign admins</li>
                   <li>See progress of members</li>

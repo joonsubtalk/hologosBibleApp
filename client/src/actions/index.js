@@ -48,6 +48,12 @@ export const postNewGroup = (uuid, {title, date, admin}) => async dispatch => {
     .update({'groups':{[uuid] : date}})
 }
 
+/* getUserInfo */
+export const fetchUserInfo = (uuid) => async dispatch => {
+  const userInfo = await groupRef.child(uuid).once('value', readSnapshot => readSnapshot.val());
+  return userInfo;
+}
+
 /* Join new group */
 export const setGroupJoin = (uid, uuid, groupId, groupObj) => async dispatch => {
   groupRef
@@ -88,6 +94,14 @@ export const setTribe = (uid, tribe) => async dispatch => {
     .child(uid)
     .update(tribe);
 }
+
+/* Read Book */
+export const setBookComplete = (uid, book, chapters ) => async dispatch => {
+  readRef
+    .child(uid)
+    .child(book)
+    .update(chapters);
+};
 
 /* Read */
 export const upsertChapterRead = (newRead, book, chapter, uid) => async dispatch => {
