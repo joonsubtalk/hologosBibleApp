@@ -11,6 +11,14 @@ class Book extends Component {
     hasRead: false,
   }
 
+  componentDidMount() {
+    if (this.props.read) {
+      if (this.props.read && this.props.read[this.props.id]) {
+        this.setState({hasRead: _.compact(this.props.read[this.props.id]).length === this.props.chapters.length})
+      }
+    }
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.read !== this.props.read) {
       if (this.props.read && this.props.read[this.props.id]) {

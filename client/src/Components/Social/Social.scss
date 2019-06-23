@@ -9,7 +9,7 @@
     // background-color: #ffffff;
     // padding: 1em;
     margin-right: 1em;
-
+    flex: 1 0 0;
   }
   &__wrapper {
     display: flex;
@@ -23,8 +23,17 @@
     width: 50px;
     height: 50px;
   }
-  &__cards {
+  &__leaderboard {
 
+  }
+  &__header {
+    margin-bottom: 1em;
+    text-align: center;
+  }
+  &__whoName {
+    font-size: .7em;
+    text-align: center;
+    margin-bottom: 1em;
   }
   &__card {
     box-shadow: 0 6px 15px rgba(36,37,38,0.2);
@@ -48,19 +57,98 @@
 .group {
   font-size: 1rem;
   &__container {
+    margin-bottom: 2.5em;
+  }
+  &__ribbon {
+    position: absolute;
+    font-size: .8em;
+    top: 1em;
+    left: -0.6em;
+    padding: .25em 1.5em;
+    color: rgba(255,255,255,.9);
+    background-image: linear-gradient(to right, #868f96 0%, #596164 100%);
 
+    &:after {
+      content: '';
+      position: absolute;
+      left: 2.5px;
+      top: 17px;
+      width: 0;
+      height: 0;
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+      border-right: 5px solid #9bc5c3;
+      transform: rotate(135deg);
+    }
+  }
+  &__user {
+    font-size: .8em;
+    opacity: .8;
   }
   &__header {
-
+    font-size: 1.25em;
   }
-  &__content {
-
+  &__date {
+    opacity: .8;
+    position: absolute;
+    right: 0.5em;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  &__tribe {
+    border-radius: 7px;
+    padding: .3em .5em;
+    font-size: .5em;
+    position: absolute;
+    bottom: 1em;
+    right: 1em;
+    color: rgba(1,1,1,.7);
   }
   &__card {
-    padding: 1.5em 1em;
+    padding: 2.5em 1em 1em;
     box-shadow: 0 6px 15px rgba(36,37,38,0.2);
     background-color: #ffffff;
     border-radius: 5px;
     margin-bottom: 1em;
+    position: relative;
+  }
+}
+
+.group__card.group--book {
+
+  & {
+    color: rgba(255,255,255,.9);
+    padding: 3.25em 1em 2.25em;
+    background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+
+  .group__tribe {
+    color: rgba(255,255,255,.7);
+  }
+
+  .group__ribbon {
+    position: absolute;
+    font-size: .9em;
+    top: 1em;
+    left: -.7em;
+    padding: .5em 1.5em;
+    background-image: none;
+    color: rgba(255,255,255,.9);
+    background-color: #764ba2;
+    // background-blend-mode: screen, overlay;
+
+
+    &:after {
+      content: '';
+      position: absolute;
+      left: 4px;
+      top: 26px;
+      width: 0;
+      height: 0;
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+      border-right: 8px solid #764ba2;
+      transform: rotate(135deg);
+    }
   }
 }

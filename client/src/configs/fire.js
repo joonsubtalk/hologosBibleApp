@@ -21,6 +21,7 @@ firebase.initializeApp(config);
 const databaseRef = firebase.database().ref();
 export const groupRef = databaseRef.child("group");
 export const readRef = databaseRef.child("read");
+export const bookRef = databaseRef.child("book");
 export const messageRef = databaseRef.child("message");
 export const profileRef = databaseRef.child("profile");
 export const authRef = firebase.auth();

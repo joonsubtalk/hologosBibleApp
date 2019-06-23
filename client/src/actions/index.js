@@ -1,6 +1,7 @@
 import _ from 'lodash';
-import { readRef, groupRef, authRef, messageRef, profileRef, googleProvider, facebookProvider } from "../configs/fire";
+import { readRef, groupRef, authRef, messageRef, profileRef, googleProvider, facebookProvider, bookRef } from "../configs/fire";
 import {
+  BOOK_COMPLETE,
   FETCH_USER,
   FETCH_GROUP_FEED,
   FETCH_USER_PROFILE,
@@ -19,13 +20,25 @@ export const fetchGroup = (uuid) => async dispatch => {
     const groupReference = await groupRef.child(uuid);
     const groupName = await groupReference.child('title').once('value')
     const groupMembers = await groupReference.child('members').once('value');
-    const memberSnapshotArr = _.keys(groupMembers.val())
+    const memberSnapshotArr = _.keys(groupMembers.val());
 
     const groupTitle = groupName.val();
 
     const memberReadingArr = await Promise.all( memberSnapshotArr.map(async d =>{
+      const memberProfile = await profileRef.child(d).once('value');
+      const {username, tribe} = memberProfile.val();
+      const bookReadByMember = await bookRef.child(d).once('value');
+      const bookReadObj = bookReadByMember.val();
       const memberReadObj = await readRef.child(d).once('value');
-        return {[d]: memberReadObj.val()}
+        // given a bookReadObj, loop all keys and insert into the first array of for sures
+        const memberHasReadObj = memberReadObj.val();
+        if (bookReadObj) {
+          const keys = Object.keys(bookReadObj)
+          for (const key of keys) {
+            memberHasReadObj[key][0] = bookReadObj[key];
+          }
+        }
+        return {[username]: memberHasReadObj, tribe, id: d}
       })
     );
     dispatch({
@@ -94,6 +107,13 @@ export const setTribe = (uid, tribe) => async dispatch => {
     .child(uid)
     .update(tribe);
 }
+
+/* Read Book after Chaptering */
+export const toggleBookCompletion = (uid, book ) => async dispatch => {
+  bookRef
+    .child(uid)
+    .update(book);
+};
 
 /* Read Book */
 export const setBookComplete = (uid, book, chapters ) => async dispatch => {

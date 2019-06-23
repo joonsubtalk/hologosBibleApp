@@ -1,21 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import throttle from 'lodash/throttle';
 import * as actions from '../../actions';
+import _ from 'lodash';
+import {SIMPLE_BIBLE} from '../../configs/constants';
 
 class Chapter extends Component {
 
-  constructor(props) {
-    super(props);
-    this.throttledChapterToggle = throttle(this.throttledChapterToggle.bind(this), 750)
-  }
-
   handleAreYouSure = (bid, chapter, uid) => {
     this.props.removeChapterRead(bid, chapter, uid);
+    this.props.toggleBookCompletion(uid, {[bid] : null});
   }
 
   handleChapterToggle = evt => {
-    const { upsertChapterRead, hasRead, auth, chapter, bid } = this.props;
+    const { upsertChapterRead, hasRead, auth, chapter, bid, read } = this.props;
     evt.preventDefault();
 
     if (hasRead) {
@@ -27,23 +24,14 @@ class Chapter extends Component {
       upsertChapterRead({
         timestamp: timestamp
       }, bid, chapter, auth.uid);
+
+      // check if this is the last chapter before a book is done!
+      const {chapters, book} = SIMPLE_BIBLE.meta[bid];
+      if (chapters === 1 || chapters - 1 === _.compact(this.props.read[bid]).length) {
+        this.props.toggleBookCompletion(auth.uid, {[bid] : timestamp});
+      }
     }
   };
-
-  throttledChapterToggle = (evt) => {
-    this.clearTimer();
-    this.setTimer(evt);
-  }
-
-  setTimer = (evt) => {
-    if (this.timerHandle) {
-      return;
-    }
-    this.handleChapterToggle(evt);
-    this.timerHandle = setTimeout(()=>{
-      this.timerHandle = 0;
-    }, 500);
-  }
 
   clearTimer = () => {
     if (this.timerHandle) {
@@ -59,7 +47,7 @@ class Chapter extends Component {
       : 'chapter';
     return (
       <div className={modifiedClassName}>
-        <div className="chapter__container" onClick={this.throttledChapterToggle}>
+        <div className="chapter__container" onClick={this.handleChapterToggle}>
           <div className="chapter__number">
             {chapter}
           </div>
@@ -69,10 +57,11 @@ class Chapter extends Component {
   }
 }
 
-const mapStateToProps = ({ data, auth }) => {
+const mapStateToProps = ({ data, auth, read }) => {
   return {
     data,
     auth,
+    read,
   };
 };
 

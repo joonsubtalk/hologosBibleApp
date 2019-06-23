@@ -4,6 +4,7 @@ import {format, compareDesc} from 'date-fns';
 import * as actions from '../../actions';
 import { VERSION_TRIBES } from '../../configs/constants';
 import Goals from '../Goals/Goals';
+import Avatar from '../Avatar/Avatar';
 
 class Settings extends Component {
   state = {
@@ -82,7 +83,7 @@ class Settings extends Component {
     return (
       <div className='settings'>
         <div className="settings__container">
-          <div className="settings__header">Settings</div>
+          <div className="settings__header">Settings (Work in Progress)</div>
           <div className="settings__section">
             <button className="settings__signout" onClick={this.props.signOut}>
             Sign Out
@@ -113,7 +114,12 @@ class Settings extends Component {
               <textarea onChange={this.commentHandler} value={userMessage} placeholder="What would you like to say?"/>
               <button onClick={this.postComment} disabled={userMessage.length < 10}>send comment</button>
           </div>
+
           <div className="settings__section">
+            <Avatar />
+          </div>
+
+          {/* <div className="settings__section">
             <h3>Goals:</h3>
               <p>Not everyone's goals is to read the whole bible in a year.</p>
               <pre>
@@ -125,7 +131,7 @@ class Settings extends Component {
                 Goals:  | Exclude:<br />
               </pre>
               <Goals />
-          </div>
+          </div> */}
           <div className="settings__section">
             <ul>
               <li>Purchase Night Mode, or share referral code to gain achievement</li>
