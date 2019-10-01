@@ -4,6 +4,8 @@
   font-size: 1rem;
   font-family: 'Lato', sans-serif;
   overflow: hidden;
+  position: relative;
+  top: -4em;
 
   &__container {
     overflow: hidden;

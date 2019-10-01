@@ -26,7 +26,7 @@ export const fetchGroup = (uuid) => async dispatch => {
 
     const memberReadingArr = await Promise.all( memberSnapshotArr.map(async d =>{
       const memberProfile = await profileRef.child(d).once('value');
-      const {username, tribe} = memberProfile.val();
+      const {username, tribe, photoURL, streak} = memberProfile.val();
       const bookReadByMember = await bookRef.child(d).once('value');
       const bookReadObj = bookReadByMember.val();
       const memberReadObj = await readRef.child(d).once('value');
@@ -38,7 +38,7 @@ export const fetchGroup = (uuid) => async dispatch => {
             memberHasReadObj[key][0] = bookReadObj[key];
           }
         }
-        return {[username]: memberHasReadObj, tribe, id: d}
+        return {[username]: memberHasReadObj, tribe, id: d, photoURL: photoURL ? photoURL : null, streak}
       })
     );
     dispatch({
@@ -77,7 +77,34 @@ export const setGroupJoin = (uid, uuid, groupId, groupObj) => async dispatch => 
     .child(uid)
     .child('groups')
     .update(groupObj);
+
+  // const groupReference = await groupRef.child(uuid);
+  // const groupName = await groupReference.child('title').once('value')
+  // const groupTitle = groupName.val();
+
+  // groupTitle
+  // ? dispatch({
+  //     type: CONFIRM_GROUP_JOIN,
+  //     payload: {
+  //       title: groupTitle,
+  //       error: null
+  //     },
+  //   })
+  // : dispatch({
+  //   type: FAILED_GROUP_JOIN,
+  //   payload: {
+  //     error: 'Sorry, not a valid code',
+  //     title: null,
+  //   },
+  // })
 }
+
+// Set user streak
+// export const setStreak = (uid, streak) => async dispatch => {
+//     profileRef
+//         .child(uid)
+//         .update(streak);
+// }
 
 /* Set UserName */
 export const setUsername = (uid, username) => async dispatch => {
@@ -123,6 +150,30 @@ export const setBookComplete = (uid, book, chapters ) => async dispatch => {
     .update(chapters);
 };
 
+
+// 
+export const setStreak = (uid, timestamp) => async dispatch => {
+    const profile = await profileRef.child(uid).on("value", snapshot => {
+        const profObj = snapshot.val();
+        return profObj;
+    });
+
+    const {streak} = profile;
+    // IF the user has not had a streak obj, we give them one.
+    if (!streak) {
+        profileRef
+            .child(uid)
+            .set({streak: {
+                current: 1,
+                high: 1,
+                lastCurrent: timestamp,
+            }})
+    } else {
+        // Check if user's last streak has already been updated.
+        const {current, high, lastCurrent} = streak;
+    }
+}
+
 /* Read */
 export const upsertChapterRead = (newRead, book, chapter, uid) => async dispatch => {
   readRef
@@ -130,6 +181,9 @@ export const upsertChapterRead = (newRead, book, chapter, uid) => async dispatch
     .child(book)
     .child(chapter)
     .update(newRead);
+
+  const date = new Date();
+  const timestamp = date.getTime();
 };
 
 export const removeChapterRead = (book, chapter, uid) => async dispatch => {
@@ -142,20 +196,40 @@ export const removeChapterRead = (book, chapter, uid) => async dispatch => {
 
 export const fetchBookChapterRead = (uid) => async dispatch => {
   readRef.child(uid).on("value", snapshot => {
+    const read = snapshot.val();
     dispatch({
       type: FETCH_BOOK_CHAPTER_READ,
-      payload: snapshot.val()
+      payload: read
     });
   });
 };
 
 export const fetchProfile = (uid) => async dispatch => {
   profileRef.child(uid).on("value", snapshot => {
-    dispatch({
-      type: FETCH_USER_PROFILE,
-      payload: snapshot.val()
-    });
+    const profile = snapshot.val();
+    if (profile) {
+        dispatch({
+            type: FETCH_USER_PROFILE,
+            payload: profile
+        });
+    } else {
+        dispatch({
+            type: FETCH_USER_PROFILE,
+            payload: {
+                photoURL: null,
+                planStartDate: null,
+                username: null,
+                tribe: null,
+            }
+        });
+    }
   });
+}
+
+export const insertProfilePic = (uid, photoURI) => async dispatch => {
+  profileRef
+    .child(uid)
+    .update({photoURL: photoURI});
 }
 
 export const fetchUser = () => dispatch => {
@@ -183,7 +257,9 @@ export const signIn = (provider) => dispatch => {
 
   authRef
     .signInWithPopup(providerStrategy)
-    .then(result => {})
+    .then(result => {
+      console.log(result);
+    })
     .catch(error => {
       console.log(error);
     });

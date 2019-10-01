@@ -1,4 +1,4 @@
-import { FETCH_GROUP_FEED } from "../actions/types";
+import { FETCH_GROUP_FEED} from "../actions/types";
 
 const initialState = {
 }

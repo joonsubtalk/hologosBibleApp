@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import _ from 'lodash';
+import {subMilliseconds} from 'date-fns';
 import {SIMPLE_BIBLE} from '../../configs/constants';
 
 class Chapter extends Component {
@@ -12,7 +13,7 @@ class Chapter extends Component {
   }
 
   handleChapterToggle = evt => {
-    const { upsertChapterRead, hasRead, auth, chapter, bid, read } = this.props;
+    const { upsertChapterRead, setStreak, hasRead, auth, chapter, bid, read } = this.props;
     evt.preventDefault();
 
     if (hasRead) {
@@ -28,7 +29,7 @@ class Chapter extends Component {
       // check if this is the last chapter before a book is done!
       const {chapters, book} = SIMPLE_BIBLE.meta[bid];
       if (chapters === 1 || chapters - 1 === _.compact(this.props.read[bid]).length) {
-        this.props.toggleBookCompletion(auth.uid, {[bid] : timestamp});
+        this.props.toggleBookCompletion(auth.uid, {[bid] : subMilliseconds(timestamp, 100).getTime()});
       }
     }
   };

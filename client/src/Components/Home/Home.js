@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
+import _ from 'lodash';
 import * as actions from '../../actions';
 import Analytics from '../Analytics/Analytics';
 import meta from '../../configs/bible.json';
@@ -19,14 +20,10 @@ class Home extends Component {
     this.props.fetchBookChapterRead(this.props.auth.uid);
     this.revealMainTimer();
     if (this.props.profile){this.setState({showMain: true})}
-  }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.profile !== this.props.profile) {
-      if (this.props.profile === null || this.props.profile.username === undefined){
+    if (this.props.profile && this.props.profile.planStartDate === null) {
         clearTimeout(this.state.revealTimer);
         this.props.history.push('/setup/1')
-      }
     }
   }
 
@@ -72,10 +69,11 @@ class Home extends Component {
   }
 }
 
-const mapStateToProps = ({ auth, profile }) => {
+const mapStateToProps = ({ auth, profile, read }) => {
   return {
     auth,
     profile,
+    read
   };
 };
 

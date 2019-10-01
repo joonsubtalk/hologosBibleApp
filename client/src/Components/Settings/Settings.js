@@ -116,7 +116,7 @@ class Settings extends Component {
           </div>
 
           <div className="settings__section">
-            <Avatar />
+            {/* <Avatar /> */}
           </div>
 
           {/* <div className="settings__section">

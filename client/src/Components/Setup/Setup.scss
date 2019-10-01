@@ -19,6 +19,14 @@
 
   }
 
+  &__success {
+    text-align: center;
+  }
+
+  &__fail {
+    text-align: center;
+  }
+
   &__logo {
     $SIZE: 1.75em;
     margin-right: .75em;
@@ -180,6 +188,7 @@
     border: 2px solid #764ba2;
     border-radius: 20px;
     cursor: pointer;
+    width: 100%;
     margin-bottom: 1em;
   }
 }

@@ -1,0 +1,93 @@
+.trophy {
+  font-size: 1rem;
+  font-family: 'Nunito', sans-serif;
+
+  &__container {
+      display: flex;
+      flex-direction: row;
+  }
+  &__content {
+      text-align: left;
+      margin-left: 0em;
+      padding: 3em 0;
+      width: 100%;
+      border-bottom: 1px solid #eeeeee;
+  }
+  &__title {
+      font-size: 1.5em;
+      margin-bottom: .25em;
+      color: #484848;
+      font-weight: bold;
+  }
+  &__description {
+      font-size: .8em;
+      color: #a9a9a9;
+  }
+
+  &__graphic {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+
+  &__hexagon {
+      height: 7em;
+      width: 7em;
+      position: relative;
+  }
+  &__point {
+      position: absolute;
+      font-size: 1em;
+      padding: .4em .65em;
+      background-color: #ccc;
+      border-radius: 3px;
+      color: #fff;
+      right: .8em;
+      top: 1.5em;
+  }
+  &__hex {
+      position: relative;
+      top: 30%;
+      left: 50%;
+      transform: translate(-35%,0%);
+  }
+  &__halfA,
+  &__halfB {
+      $widthA: 30px;
+      $widthB: $widthA/1.75;
+      position: absolute;
+      border-bottom: $widthA solid #e6e9f0;
+      border-left: $widthB solid transparent;
+      border-right: $widthB solid transparent;
+      height: 0;
+      width: $widthA;
+      transform: rotate(90deg);
+  }
+  &__halfB {
+      $widthA: 30px;
+      $widthB: $widthA/1.75;
+      border-bottom: $widthA solid #eef1f5;
+      transform: rotate(-90deg) translateY(-$widthA);
+  }
+}
+
+.trophy--achieved {
+  $widthA: 30px;
+  $widthB: $widthA/1.75;
+
+  .trophy {
+      &__halfA,
+      &__halfB {
+          border-bottom: $widthA solid #d3715f;
+          border-left: $widthB solid transparent;
+          border-right: $widthB solid transparent;
+      }
+      &__halfB {
+          border-bottom: $widthA solid #fe836c;
+      }
+      &__point {
+          background-color: #873222;
+          color: #fff;
+      }
+  }
+}

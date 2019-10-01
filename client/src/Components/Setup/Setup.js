@@ -16,7 +16,7 @@ class Setup extends Component {
     username: null,
     version: null,
     startDate: null,
-    groupId: null,
+    groupId: '',
     unlockNextStep: false,
   }
 
@@ -63,11 +63,10 @@ class Setup extends Component {
   }
 
   saveDateHandler = (evt, {date, skip}) => {
-    evt.preventDefault();
     this.props.setStartDate(this.props.auth.uid, {planStartDate: date});
     if (skip) {
       const setupPage = Number.parseInt(this.props.match.params.pid);
-      this.props.history.push(`/setup/${setupPage+2}`);
+      this.props.history.push(`/setup/${setupPage+3}`);
     }
   }
 
@@ -84,10 +83,13 @@ class Setup extends Component {
     else if (setupPage === 2) {
       this.props.setTribe(auth.uid, {tribe: this.state.version});
     }
+    else if (setupPage === 4) {
+        debugger;
+    }
   }
 
   render() {
-    const {auth: {displayName}, match, profile} = this.props;
+    const {auth: {displayName}, match, profile, group} = this.props;
     const {username, version, unlockNextStep, startDate, groupId} = this.state;
     const setupPage = Number.parseInt(match.params.pid);
     const hasFilledProfile = profile &&
@@ -116,19 +118,33 @@ class Setup extends Component {
           {
             setupPage === 4 &&
             (
-              <PreSelection />
+              <DateSelection saveDateHandler={this.saveDateHandler} showMore={true}/>
             )
           }
           {
             setupPage === 5 &&
             (
-              <JoinGroup joinGroupHandler={this.joinGroup} groupInputHandler={this.groupInputHandler} groupId={groupId} />
+              <PreSelection />
+            )
+          }
+          {
+            setupPage === 6 &&
+            (
+              <JoinGroup
+                joinGroupHandler={this.joinGroup}
+                groupInputHandler={this.groupInputHandler}
+                groupId={groupId}
+                successGroupTitle={group && group.title}
+                errorGroupTitle={group && group.error}
+              />
             )
           }
           </form>
             <div className="setup__actionable">
-              <Link onClick={this.resetNextStepHandler} to={{ pathname: setupPage > 3 ? '/home' : `/setup/${setupPage+1}` }}>
-                <button className="setup__next" disabled={!unlockNextStep}>{setupPage > 3 ? 'Finish' : 'Next'}</button>
+              <Link onClick={this.resetNextStepHandler} to={{ pathname: setupPage > 5 ? '/home' : `/setup/${setupPage+1}` }}>
+                { setupPage !== 3 && setupPage !== 4 &&
+                  <button className="setup__next">{setupPage > 5 ? 'Finish' : 'Next'}</button>
+                }
               </Link>
             </div>
         </div>
@@ -136,11 +152,12 @@ class Setup extends Component {
     )
   }
 }
-const mapStateToProps = ({ data, auth, profile }) => {
+const mapStateToProps = ({ data, auth, profile, group }) => {
   return {
     data,
     auth,
     profile,
+    group
   };
 };
 

@@ -9,7 +9,26 @@
     // background-color: #ffffff;
     // padding: 1em;
     margin-right: 1em;
-    flex: 1 0 0;
+    flex: 1;
+  }
+  &__overview {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 1em;
+  }
+  &__leaderwall {
+    background-color: #fff;
+    width: 100%;
+    border-radius: 15px;
+    padding: 1em;
+    margin-bottom: 1em;
+    box-shadow: 0 6px 15px rgba(36,37,38,0.2), 0 10px 45px rgba(36,37,38,0.2);
+  }
+  &__tab {
+    text-transform: uppercase;
+    font-size: .8em;
+    opacity: .7;
   }
   &__wrapper {
     display: flex;
@@ -18,22 +37,56 @@
   }
   &__whoami {
     border-radius: 50%;
-    border: white 5px solid;
     box-shadow: 0 6px 15px rgba(36,37,38,0.2);
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
+    margin-right: 1em;
   }
   &__leaderboard {
-
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: .5em;
   }
   &__header {
     margin-bottom: 1em;
     text-align: center;
+    color: #fff;
+    font-size: 1.05em;
+  }
+  &__status {
+    flex: 1;
+  }
+  &__bar {
+    height: 3px;
+    width: 100%;
+    background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    box-shadow: 0 0px 4px #764ba2;
+    transition: width ease 4s;
   }
   &__whoName {
+    font-size: .9em;
+    color: rgba(1,1,1,.7);
+    margin-bottom: .5em;
+    display: flex;
+  }
+  &__lead {
+    color: #764ba2;
+    margin-right: .5em;
+  }
+  &__name {
+    color: rgba(1,1,1,.7);
+    flex: 1;
+  }
+  &__star {
+    width: 1em;
+  }
+  &__chapter {
     font-size: .7em;
-    text-align: center;
-    margin-bottom: 1em;
+    color: rgba(1,1,1,.5);
+  }
+  &__chaptercount {
+    color: rgba(1,1,1,.9);
   }
   &__card {
     box-shadow: 0 6px 15px rgba(36,37,38,0.2);
@@ -41,6 +94,10 @@
     padding: 1em;
     border-radius: 5px;
     margin-bottom: .5em;
+  }
+  &__member {
+    font-size: .7em;
+    margin-bottom: 1em;
   }
   &__createGroup {
     position: fixed;
@@ -52,6 +109,12 @@
     border-radius: 10px;
     box-shadow: 0 6px 15px rgba(36,37,38,0.2);
   }
+}
+
+.social__tab.social__tab--active {
+  color: rgba(1,1,1,.9);
+  opacity: 1;
+  border-bottom: 1px solid  rgba(1,1,1,.7);
 }
 
 .group {
@@ -83,7 +146,7 @@
   }
   &__user {
     font-size: .8em;
-    opacity: .8;
+    opacity: .5;
   }
   &__header {
     font-size: 1.25em;

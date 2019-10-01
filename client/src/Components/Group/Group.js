@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import {SIMPLE_BIBLE} from '../../configs/constants';
 import * as actions from '../../actions';
-import { groupBy } from '../../../../../../../Library/Caches/typescript/3.5/node_modules/rxjs/internal/operators/groupBy';
 import reducers from '../../reducers';
 
 class Group extends Component {
@@ -35,8 +34,9 @@ class Group extends Component {
       if (report[idx].id === currentUser) continue; // skip if already visisted
       currentUser = report[idx].id;
       const usersReadGroup = groupingReport.get(currentUser);
-      const sortedReadGroup = _.sortBy(usersReadGroup, ["bid","chapters"])
+      const sortedReadGroup = _.sortBy(usersReadGroup, ["bid","chapter"])
       let chapterStart = null;
+
       sortedReadGroup.forEach((group, groupIdx) => {
         // can this current group be part of an increment?
         if (groupIdx+1 < sortedReadGroup.length) {
@@ -69,7 +69,7 @@ class Group extends Component {
       chapterStart = null;
     }
 
-    modifiedReport = _.sortBy(modifiedReport, "timestamp")
+    modifiedReport = _.sortBy(modifiedReport, "timestamp").reverse()
 
     return (
       <div className="group">
@@ -79,7 +79,7 @@ class Group extends Component {
               modifiedReport.map((blurb, idx) => {
                 var date = format(
                   new Date(blurb.timestamp),
-                  'MMMM DD'
+                  'MMM Do'
                 )
 
                 return <div key={`${blurb.timestamp}${idx}`} className={`group__card ${blurb.chapter ? '' : 'group--book'}`}>
@@ -89,8 +89,8 @@ class Group extends Component {
                     ? <div className="group__ribbon">Chapter Read</div>
                     : <div className="group__ribbon">Book Completed</div>
                   }
-                  <div className="group__header">{SIMPLE_BIBLE.meta[blurb.bid].book} {blurb.chapter}</div>
-                  <div className="group__user">by {blurb.name}</div>
+                  <div className="group__header">{SIMPLE_BIBLE.meta[blurb.bid].book} {blurb.chapter !== 0 ? blurb.chapter : ''}</div>
+                  <div className="group__user">{blurb.name}</div>
                   <div className="group__tribe">{blurb.tribe}</div>
                   <div className="group__date">{date}</div>
                 </div>

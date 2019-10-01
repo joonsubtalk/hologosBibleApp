@@ -7,7 +7,7 @@ import 'firebase/firestore';
 import 'firebase/database';
 
 const config = {
-	apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: "hologosapp.firebaseapp.com",
   databaseURL: "https://hologosapp.firebaseio.com",
   projectId: "hologosapp",

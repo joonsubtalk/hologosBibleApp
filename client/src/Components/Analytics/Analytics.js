@@ -74,13 +74,24 @@ class Analytics extends Component {
     // case where user just started...
     if (bottom === 0) return top;
 
-    return top/bottom;
+    const divide = top/bottom;
 
-    const percent = `${((top)/(bottom)).toFixed(2)}`;
-    if ((top/bottom * 100) % 1 !== 0)
-      return `${percent}`;
-    else
-      return `${percent.substring(0,percent.length - 3)}`;
+    // not a clean divide
+    if (divide % 1 !== 0) {
+
+      const percent = `${((top)/(bottom)).toFixed(2)}`;
+      const index = `${divide}`.split('').reverse().some((char, idx) => {
+        if (char === '0') return idx;
+      }) || -1;
+      if (index === -1) return Number.parseFloat(percent);
+      else {
+        return Number.parseFloat(`${percent}`.substring(0,percent.length - index));
+      }
+
+    } else {
+      // ship it!
+      return divide;
+    }
   }
 
   render() {

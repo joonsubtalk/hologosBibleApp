@@ -1,7 +1,6 @@
 import { FETCH_USER_PROFILE } from "../actions/types";
 
-const initialState = {
-}
+const initialState = null
 
 export default (state = initialState, action) => {
   switch (action.type) {

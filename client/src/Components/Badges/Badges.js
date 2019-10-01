@@ -6,6 +6,7 @@ import {format, subDays, differenceInCalendarDays, startOfMonth, startOfWeek, en
 import Loader from '../Loader/Loader';
 import WeeklyView from '../WeeklyView/WeeklyView';
 import MonthlyView from '../MonthlyView/MonthlyView';
+import Trophies from '../Trophies/Trophies';
 
 
 const MONTH_OFFSET = 31;
@@ -14,7 +15,7 @@ class Badges extends Component {
 
   state = {
     reportArr: [],
-    MONTH_OFFSET: MONTH_OFFSET
+    MONTH_OFFSET: MONTH_OFFSET,
   }
 
   componentDidMount() {
@@ -142,6 +143,7 @@ class Badges extends Component {
           ? this.__badgeRender()
           : <Loader />
         }
+        <Trophies />
         <MonthlyView />
         <div className="badges__month">
           {
